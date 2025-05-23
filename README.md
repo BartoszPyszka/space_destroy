@@ -57,8 +57,8 @@ Projekt zespołowy wykonany przez:
 Diagram obrazujący relacje pomiędzy komponentami gry, przepływ danych oraz interakcje obiektów znajduje się w katalogu `/docs/diagram.pdf`.
 
 ## 🛠️ Technologie
-- Python (lub inny język, jeśli dotyczy)
-- Biblioteka do grafiki 2D (np. Pygame)
+- C++
+- Biblioteka do grafiki (SFML)
 - Pliki tekstowe do zapisu wyników i stanów
 
 ## 💾 Instalacja i uruchomienie
@@ -69,7 +69,7 @@ cd space-destroy
 ```
 2. Uruchom grę:
 ```bash
-python main.py
+game.exe
 ```
 
 ## 📁 Struktura katalogów
