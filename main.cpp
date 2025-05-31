@@ -2,6 +2,7 @@
 #include <iostream>
 
 // Stałe określające szybkość obrotu i ruchu gracza
+//test
 constexpr float TURN_SPEED = 200.0f;           // Prędkość obrotu (stopnie na sekundę)
 constexpr float PLAYER_SPEED = 100.0f;         // Prędkość ruchu gracza (piksele na sekundę)
 constexpr float M_PI = 3.14159265f;            // Stała Pi do przeliczenia na radiany
