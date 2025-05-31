@@ -84,53 +84,39 @@ void Player::draw(sf::RenderWindow& window) {
 
 int main()
 {
-    
-    // Ustawienia początkowe okna gry
+    // Parametry okna gry
     constexpr unsigned int windowWidth = 1200;
     constexpr unsigned int windowHeight = 900;
     const std::string windowTitle = "Space Destroy";
 
-    // Tworzymy okno renderujące z określonymi wymiarami i tytułem
+    // Tworzenie głównego okna gry
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), windowTitle, sf::Style::Titlebar | sf::Style::Close);
 
-    // Zegar do mierzenia czasu między klatkami (delta time)
-    sf::Clock deltaClock;
-
-    // Flaga określająca, czy gra nadal działa
-    bool isRunning = true;
+    // Zegar do obliczania czasu między klatkami
+    sf::Clock clock;
 
     Player player;
 
     // Główna pętla gry
-    while (isRunning)
-    {
-        // Oblicz czas, który upłynął od ostatniej klatki
-        float deltaTime = deltaClock.restart().asSeconds();
+    while (window.isOpen()) {
+        float deltaTime = clock.restart().asSeconds();
 
         // Obsługa zdarzeń (np. zamknięcie okna)
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                // Użytkownik kliknął zamknięcie — kończymy pętlę i zamykamy okno
-                isRunning = false;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
                 window.close();
             }
         }
 
+        // Logika gry
         player.update(deltaTime);
 
-        // Czyszczenie ekranu — wypełniamy go kolorem czarnym
+        // Renderowanie
         window.clear(sf::Color::Black);
-
-        // Tutaj w przyszłości będzie rysowanie obiektów gry (gracz, wrogowie, pociski itd.)
         player.draw(window);
-
-        // Wyświetlenie zawartości bufora na ekranie
         window.display();
     }
 
-    // Zakończenie programu
     return 0;
 }
