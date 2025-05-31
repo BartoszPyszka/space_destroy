@@ -1,49 +1,112 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+// Sta≈Çe okre≈õlajƒÖce szybko≈õƒá obrotu i ruchu gracza
+constexpr float TURN_SPEED = 200.0f;
+constexpr float PLAYER_SPEED = 100.0f;
+
+class Player {
+public:
+    Player();
+    ~Player();
+
+    // Aktualizacja stanu gracza (obr√≥t)
+    void update(float deltaTime);
+
+    // Rysowanie gracza w oknie
+    void draw(sf::RenderWindow& window);
+
+private:
+    sf::Vector2f position;     // Pozycja gracza
+    float angle;               // KƒÖt obrotu gracza
+    sf::VertexArray shape;     // Kszta≈Çt gracza (graficzna reprezentacja)
+};
+
+// Konstruktor gracza ‚Äî ustawienie pozycji, kƒÖta i kszta≈Çtu
+Player::Player()
+    : position(500.f, 500.f), angle(45.f), shape(sf::LineStrip, 5)
+{
+    // Definicja punkt√≥w tworzƒÖcych kszta≈Çt statku
+    shape[0].position = sf::Vector2f(10.f, 0.f);
+    shape[1].position = sf::Vector2f(-10.f, -20.f);
+    shape[2].position = sf::Vector2f(0.f, 0.f);
+    shape[3].position = sf::Vector2f(-10.f, 20.f);
+    shape[4].position = shape[0].position; // Zamkniƒôcie kszta≈Çtu
+
+    // Ustawienie koloru wszystkich wierzcho≈Çk√≥w
+    for (size_t i = 0; i < shape.getVertexCount(); ++i) {
+        shape[i].color = sf::Color::White;
+    }
+}
+
+Player::~Player() = default;
+
+// Aktualizacja gracza ‚Äî obs≈Çuga obrotu
+void Player::update(float deltaTime) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        angle -= TURN_SPEED * deltaTime;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        angle += TURN_SPEED * deltaTime;
+    }
+}
+
+// Rysowanie gracza z odpowiedniƒÖ transformacjƒÖ
+void Player::draw(sf::RenderWindow& window) {
+    sf::Transform transform;
+    transform.translate(position).rotate(angle);
+    window.draw(shape, transform);
+}
+
 int main()
 {
-    // Ustawienia poczπtkowe okna gry
+    
+    // Ustawienia poczƒÖtkowe okna gry
     constexpr unsigned int windowWidth = 1200;
     constexpr unsigned int windowHeight = 900;
     const std::string windowTitle = "Space Destroy";
 
-    // Tworzymy okno renderujπce z okreúlonymi wymiarami i tytu≥em
+    // Tworzymy okno renderujƒÖce z okre≈õlonymi wymiarami i tytu≈Çem
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), windowTitle, sf::Style::Titlebar | sf::Style::Close);
 
-    // Zegar do mierzenia czasu miÍdzy klatkami (delta time)
+    // Zegar do mierzenia czasu miƒôdzy klatkami (delta time)
     sf::Clock deltaClock;
 
-    // Flaga okreúlajπca, czy gra nadal dzia≥a
+    // Flaga okre≈õlajƒÖca, czy gra nadal dzia≈Ça
     bool isRunning = true;
 
-    // G≥Ûwna pÍtla gry
+    Player player;
+
+    // G≈Ç√≥wna pƒôtla gry
     while (isRunning)
     {
-        // Oblicz czas, ktÛry up≥ynπ≥ od ostatniej klatki
+        // Oblicz czas, kt√≥ry up≈ÇynƒÖ≈Ç od ostatniej klatki
         float deltaTime = deltaClock.restart().asSeconds();
 
-        // Obs≥uga zdarzeÒ (np. zamkniÍcie okna)
+        // Obs≈Çuga zdarze≈Ñ (np. zamkniƒôcie okna)
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
-                // Uøytkownik kliknπ≥ zamkniÍcie ó koÒczymy pÍtlÍ i zamykamy okno
+                // U≈ºytkownik kliknƒÖ≈Ç zamkniƒôcie ‚Äî ko≈Ñczymy pƒôtlƒô i zamykamy okno
                 isRunning = false;
                 window.close();
             }
         }
 
-        // Czyszczenie ekranu ó wype≥niamy go kolorem czarnym
+        player.update(deltaTime);
+
+        // Czyszczenie ekranu ‚Äî wype≈Çniamy go kolorem czarnym
         window.clear(sf::Color::Black);
 
-        // Tutaj w przysz≥oúci bÍdzie rysowanie obiektÛw gry (gracz, wrogowie, pociski itd.)
+        // Tutaj w przysz≈Ço≈õci bƒôdzie rysowanie obiekt√≥w gry (gracz, wrogowie, pociski itd.)
+        player.draw(window);
 
-        // Wyúwietlenie zawartoúci bufora na ekranie
+        // Wy≈õwietlenie zawarto≈õci bufora na ekranie
         window.display();
     }
 
-    // ZakoÒczenie programu
+    // Zako≈Ñczenie programu
     return 0;
 }
