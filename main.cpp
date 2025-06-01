@@ -1,157 +1,182 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <list>
 
-// Stałe określające szybkość obrotu i ruchu gracza
-//test
-constexpr float TURN_SPEED = 200.0f;           // Prędkość obrotu (stopnie na sekundę)
-constexpr float PLAYER_SPEED = 100.0f;         // Prędkość ruchu gracza (piksele na sekundę)
-constexpr float M_PI = 3.14159265f;            // Stała Pi do przeliczenia na radiany
+// Stałe do kontroli ruchu i obrotu
+constexpr float TURN_SPEED = 200.0f;     // stopnie/sek
+constexpr float PLAYER_SPEED = 100.0f;     // piksele/sek
+constexpr float BULLET_SPEED = 400.0f;     // prędkość pocisku
+constexpr float SHOOT_DELAY = 0.2f;       // opóźnienie między strzałami
+constexpr float BULLET_LIFE = 3.0f;       // czas życia pocisku w sekundach
+constexpr float M_PI = 3.14159265f; // stała Pi
 
-
-// Bazowa klasa dla wszystkich obiektów gry
-class GameObject
-{
+// Klasa bazowa dla wszystkich obiektów gry
+class GameObject {
 public:
-    GameObject();
-    ~GameObject();
+    GameObject(sf::Vector2f pos = { 0, 0 }, float ang = 0.0f)
+        : position(pos), angle(ang) {
+    }
 
-    // Wirtualne metody do nadpisania przez klasy dziedziczące
-    virtual void update(float deltaTime) = 0;       // Aktualizacja stanu obiektu
-    virtual void render(sf::RenderWindow& window) = 0;     // Rysowanie obiektu w oknie
+    virtual ~GameObject() {}
 
-private:
+    virtual void update(float deltaTime) = 0;
+    virtual void render(sf::RenderWindow& window) = 0;
 
+    sf::Vector2f position;
+    float angle;
 };
 
-// Implementacja konstruktora i destruktora klasy bazowej
-GameObject::GameObject()
-{
-}
-
-GameObject::~GameObject()
-{
-}
-
-// Klasa gracza, dziedziczy po GameObject
-class Player : public GameObject {
-public:
-    Player();
-    ~Player();
-
-    // Aktualizacja stanu gracza (obrót i ruch)
-    void update(float deltaTime) override; //override- nadpisanie klasy wirtualnej
-
-    // Rysowanie gracza w oknie
-    void render(sf::RenderWindow& window) override; //override- nadpisanie klasy wirtualnej
-
-private:
-    sf::Vector2f position;     // Aktualna pozycja gracza na ekranie
-    float angle;               // Kąt obrotu gracza (w stopniach)
-    sf::VertexArray shape;     // Graficzna reprezentacja statku jako zbiór wierzchołków
-};
-
-// Konstruktor gracza — ustawienie początkowej pozycji, kąta i kształtu
-Player::Player()
-    : position(500.f, 500.f), angle(45.f), shape(sf::LineStrip, 5)
-{
-    // Definicja punktów tworzących kształt statku
-    shape[0].position = sf::Vector2f(10.f, 0.f);     // Wierzchołek "przodu" statku
-    shape[1].position = sf::Vector2f(-10.f, -20.f);  // Lewy "róg" tyłu
-    shape[2].position = sf::Vector2f(0.f, 0.f);      // Środkowy punkt tyłu
-    shape[3].position = sf::Vector2f(-10.f, 20.f);   // Prawy "róg" tyłu
-    shape[4].position = shape[0].position;           // Zamknięcie kształtu (wracamy do przodu)
-
-    // Ustawienie koloru każdego wierzchołka na biały
-    for (size_t i = 0; i < shape.getVertexCount(); ++i) {
-        shape[i].color = sf::Color::White;
-    }
-}
-
-Player::~Player() = default;
-
-// Aktualizacja stanu gracza na podstawie wejścia użytkownika
-void Player::update(float deltaTime) {
-    // Obrót w lewo (A)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        angle -= TURN_SPEED * deltaTime;
-    }
-
-    // Obrót w prawo (D)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        angle += TURN_SPEED * deltaTime;
-    }
-
-    // Ruch do przodu (W)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        // Konwersja kąta na radiany dla funkcji trygonometrycznych
-        float radians = angle * (M_PI / 180.0f);
-
-        // Przesuwanie pozycji gracza w kierunku aktualnego obrotu
-        position.x += std::cos(radians) * PLAYER_SPEED * deltaTime;
-        position.y += std::sin(radians) * PLAYER_SPEED * deltaTime;
-    }
-
-    // Ruch do tyłu (S)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        float radians = angle * (M_PI / 180.0f);
-
-        // Ruch w przeciwnym kierunku, ale wolniejszy (1/3 prędkości)
-        position.x -= (std::cos(radians) * PLAYER_SPEED * deltaTime) / 3;
-        position.y -= (std::sin(radians) * PLAYER_SPEED * deltaTime) / 3;
-    }
-}
-
-
-// Rysowanie gracza z odpowiednią transformacją
-void Player::render(sf::RenderWindow& window) {
-    sf::Transform transform;
-    transform.translate(position).rotate(angle);
-    window.draw(shape, transform);
-}
-
-// Wektor przechowujący wskaźniki do wszystkich obiektów gry
+// Wektor przechowujący wszystkie obiekty gry (globalnie dostępny)
 std::vector<GameObject*> objects{};
 
+// Listy do późniejszego dodawania i usuwania obiektów (aby uniknąć modyfikacji wektora w trakcie iteracji)
+std::list<std::vector<GameObject*>::const_iterator> toRemoveList{};
+std::list<GameObject*> toAddList{};
+
+// Klasa pocisku (Bullet)
+class Bullet : public GameObject {
+public:
+    Bullet(sf::Vector2f startPos, sf::Vector2f dir)
+        : GameObject(startPos), shape(3.0f), direction(dir), lifetime(BULLET_LIFE)
+    {
+        shape.setFillColor(sf::Color::Red); // Kolor pocisku
+    }
+
+    void update(float deltaTime) override {
+        // Przesuwanie pocisku w zadanym kierunku
+        position += direction * BULLET_SPEED * deltaTime;
+
+        // Zmniejszanie czasu życia
+        lifetime -= deltaTime;
+
+        // Usunięcie pocisku po jego "wygaśnięciu"
+        if (lifetime <= 0.0f) {
+            toRemoveList.push_back(std::find(objects.begin(), objects.end(), this));
+        }
+    }
+
+    void render(sf::RenderWindow& window) override {
+        shape.setPosition(position);
+        window.draw(shape);
+    }
+
+private:
+    sf::CircleShape shape;
+    sf::Vector2f direction;
+    float lifetime;
+};
+
+// Klasa gracza
+class Player : public GameObject {
+public:
+    Player()
+        : GameObject({ 500, 500 }, 0.0f), shape(sf::LineStrip, 5), shootTimer()
+    {
+        // Kształt statku 
+        shape[0].position = sf::Vector2f(10.f, 0.f);
+        shape[1].position = sf::Vector2f(-10.f, -20.f);
+        shape[2].position = sf::Vector2f(0.f, 0.f);
+        shape[3].position = sf::Vector2f(-10.f, 20.f);
+        shape[4].position = shape[0].position;
+
+        for (size_t i = 0; i < shape.getVertexCount(); ++i)
+            shape[i].color = sf::Color::White;
+    }
+
+    void update(float deltaTime) override {
+        shootTimer -= deltaTime; // Odliczanie do następnego możliwego strzału
+
+        // Obrót gracza
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            angle -= TURN_SPEED * deltaTime;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            angle += TURN_SPEED * deltaTime;
+
+        float radians = angle * (M_PI / 180.f);
+
+        // Ruch do przodu
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            position.x += std::cos(radians) * PLAYER_SPEED * deltaTime;
+            position.y += std::sin(radians) * PLAYER_SPEED * deltaTime;
+        }
+
+        // Ruch do tyłu (wolniejszy)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            position.x -= std::cos(radians) * PLAYER_SPEED * deltaTime / 3;
+            position.y -= std::sin(radians) * PLAYER_SPEED * deltaTime / 3;
+        }
+
+        // Strzelanie pociskiem (spacja)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && shootTimer <= 0.0f) {
+            shootTimer = SHOOT_DELAY;
+
+            sf::Vector2f direction = { std::cos(radians), std::sin(radians) };
+            toAddList.push_back(new Bullet(position, direction));
+        }
+    }
+
+    void render(sf::RenderWindow& window) override {
+        sf::Transform transform;
+        transform.translate(position).rotate(angle);
+        window.draw(shape, transform);
+    }
+
+private:
+    sf::VertexArray shape;
+    float shootTimer; // Timer między strzałami
+};
+
+// Funkcja główna programu
 int main()
 {
-    // Parametry okna gry
     constexpr unsigned int windowWidth = 1200;
     constexpr unsigned int windowHeight = 900;
     const std::string windowTitle = "Space Destroy";
 
-    // Tworzenie głównego okna gry
+    // Tworzenie okna gry
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), windowTitle, sf::Style::Titlebar | sf::Style::Close);
-
-    // Zegar do obliczania czasu między klatkami
     sf::Clock clock;
 
-    // Dodanie gracza do listy obiektów gry
+    // Dodanie gracza do gry
     objects.push_back(new Player());
 
     // Główna pętla gry
     while (window.isOpen()) {
         float deltaTime = clock.restart().asSeconds();
 
-        // Obsługa zdarzeń (np. zamknięcie okna)
+        // Obsługa zdarzeń
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed)
                 window.close();
-            }
         }
 
-        // Czyszczenie ekranu (kolor czarny)
+        // Czyszczenie ekranu
         window.clear(sf::Color::Black);
+        toAddList.clear();
+        toRemoveList.clear();
 
-        // Aktualizacja i rysowanie wszystkich obiektów gry
-        for (auto& object : objects)
-        {
-            object->update(deltaTime);
-            object->render(window);
+        // Aktualizacja i rysowanie obiektów
+        for (GameObject* obj : objects) {
+            obj->update(deltaTime);
+            obj->render(window);
         }
 
-        // Wyświetlenie zawartości na ekranie
+        // Usunięcie obiektów oznaczonych do usunięcia
+        for (const auto& it : toRemoveList) {
+            delete* it;
+            objects.erase(it);
+        }
+
+        // Dodanie nowych obiektów
+        for (GameObject* obj : toAddList) {
+            objects.push_back(obj);
+        }
+
+        // Wyświetlenie ekranu
         window.display();
     }
 
