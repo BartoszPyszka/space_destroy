@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 // Stałe określające szybkość obrotu i ruchu gracza
 //test
@@ -7,16 +8,42 @@ constexpr float TURN_SPEED = 200.0f;           // Prędkość obrotu (stopnie na
 constexpr float PLAYER_SPEED = 100.0f;         // Prędkość ruchu gracza (piksele na sekundę)
 constexpr float M_PI = 3.14159265f;            // Stała Pi do przeliczenia na radiany
 
-class Player {
+
+// Bazowa klasa dla wszystkich obiektów gry
+class GameObject
+{
+public:
+    GameObject();
+    ~GameObject();
+
+    // Wirtualne metody do nadpisania przez klasy dziedziczące
+    virtual void update(float deltaTime) = 0;       // Aktualizacja stanu obiektu
+    virtual void render(sf::RenderWindow& window) = 0;     // Rysowanie obiektu w oknie
+
+private:
+
+};
+
+// Implementacja konstruktora i destruktora klasy bazowej
+GameObject::GameObject()
+{
+}
+
+GameObject::~GameObject()
+{
+}
+
+// Klasa gracza, dziedziczy po GameObject
+class Player : public GameObject {
 public:
     Player();
     ~Player();
 
     // Aktualizacja stanu gracza (obrót i ruch)
-    void update(float deltaTime);
+    void update(float deltaTime) override; //override- nadpisanie klasy wirtualnej
 
     // Rysowanie gracza w oknie
-    void draw(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window) override; //override- nadpisanie klasy wirtualnej
 
 private:
     sf::Vector2f position;     // Aktualna pozycja gracza na ekranie
@@ -77,11 +104,14 @@ void Player::update(float deltaTime) {
 
 
 // Rysowanie gracza z odpowiednią transformacją
-void Player::draw(sf::RenderWindow& window) {
+void Player::render(sf::RenderWindow& window) {
     sf::Transform transform;
     transform.translate(position).rotate(angle);
     window.draw(shape, transform);
 }
+
+// Wektor przechowujący wskaźniki do wszystkich obiektów gry
+std::vector<GameObject*> objects{};
 
 int main()
 {
@@ -96,7 +126,8 @@ int main()
     // Zegar do obliczania czasu między klatkami
     sf::Clock clock;
 
-    Player player;
+    // Dodanie gracza do listy obiektów gry
+    objects.push_back(new Player());
 
     // Główna pętla gry
     while (window.isOpen()) {
@@ -110,12 +141,17 @@ int main()
             }
         }
 
-        // Logika gry
-        player.update(deltaTime);
-
-        // Renderowanie
+        // Czyszczenie ekranu (kolor czarny)
         window.clear(sf::Color::Black);
-        player.draw(window);
+
+        // Aktualizacja i rysowanie wszystkich obiektów gry
+        for (auto& object : objects)
+        {
+            object->update(deltaTime);
+            object->render(window);
+        }
+
+        // Wyświetlenie zawartości na ekranie
         window.display();
     }
 
