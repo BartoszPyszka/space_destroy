@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -6,11 +7,20 @@
 
 // Stałe do kontroli ruchu i obrotu
 constexpr float TURN_SPEED = 200.0f;     // stopnie/sek
-constexpr float PLAYER_SPEED = 100.0f;     // piksele/sek
+constexpr float PLAYER_SPEED = 1000.0f;     // piksele/sek
 constexpr float BULLET_SPEED = 400.0f;     // prędkość pocisku
 constexpr float SHOOT_DELAY = 0.2f;       // opóźnienie między strzałami
 constexpr float BULLET_LIFE = 3.0f;       // czas życia pocisku w sekundach
 constexpr float M_PI = 3.14159265f; // stała Pi
+constexpr float ASTEROID_SPIN = 40.0f;
+constexpr float ASTEROID_SPEED = 200.0f;
+constexpr float ASTEROID_W = 20.0f;
+constexpr float ASTEROID_H = 20.0f;
+constexpr float SCREEN_WIDTH = 1190.0f;
+constexpr float SCREEN_HEIGHT = 890.0;
+constexpr float PLAYER_W = 4.0f;
+constexpr float PLAYER_H = 4.0f;
+
 
 // Klasa bazowa dla wszystkich obiektów gry
 class GameObject {
@@ -101,12 +111,24 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             position.x += std::cos(radians) * PLAYER_SPEED * deltaTime;
             position.y += std::sin(radians) * PLAYER_SPEED * deltaTime;
+
+            // Ustawienie granicy dla gracza
+            position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f),
+                SCREEN_WIDTH - PLAYER_W / 2.0f);
+            position.y = std::min(std::max(position.y, PLAYER_H / 2.0f + 10.0f),
+                SCREEN_HEIGHT - PLAYER_H / 2.0f);
         }
 
         // Ruch do tyłu (wolniejszy)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             position.x -= std::cos(radians) * PLAYER_SPEED * deltaTime / 3;
             position.y -= std::sin(radians) * PLAYER_SPEED * deltaTime / 3;
+
+            // Ustawienie granicy dla gracza
+            position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f),
+                SCREEN_WIDTH - PLAYER_W / 2.0f);
+            position.y = std::min(std::max(position.y, PLAYER_H / 2.0f + 10.0f),
+                SCREEN_HEIGHT - PLAYER_H / 2.0f);
         }
 
         // Strzelanie pociskiem (spacja)
@@ -129,6 +151,79 @@ private:
     float shootTimer; // Timer między strzałami
 };
 
+class Asteroid : public GameObject {
+public:
+    Asteroid(sf::Vector2f direction)
+        : GameObject(sf::Vector2f(700, 300), 0.0f), direction(direction), shape(sf::TrianglesFan, 6), life() {
+
+
+        shape[0].position = sf::Vector2f(0, 30);
+        shape[1].position = sf::Vector2f(30, 15);
+        shape[2].position = sf::Vector2f(30, -15);
+        shape[3].position = sf::Vector2f(0, -30);
+        shape[4].position = sf::Vector2f(-30, -15);
+        shape[5].position = sf::Vector2f(-30, 15);
+
+        for (size_t i = 0; i < shape.getVertexCount(); ++i)
+            shape[i].color = sf::Color::White;
+
+        if (!bounceBuffer.loadFromFile("assets/bounce.wav")) {
+            std::cerr << "Nie udalo sie zaladowac dzwieku odbicia!" << std::endl;
+        }
+        bounceSound.setBuffer(bounceBuffer);
+
+    }
+
+    void update(float deltaTime) override {
+        // Zwiększanie czasu życia asteroidy
+        life += deltaTime;
+
+        // Przesuwanie asteroidy w aktualnym kierunku z uwzględnieniem prędkości i czasu
+        position += ASTEROID_SPEED * direction * deltaTime;
+
+        // Obrót asteroidy
+        angle += ASTEROID_SPIN * deltaTime;
+
+        // Odbicie od lewej krawędzi ekranu
+        if (position.x < ASTEROID_W / 2.0f + 17.0f) {
+            direction.x = abs(direction.x);       // zmień kierunek na dodatni w osi X
+            bounceSound.play();                   // odtwórz dźwięk odbicia
+        }
+
+        // Odbicie od prawej krawędzi ekranu
+        else if (position.x > SCREEN_WIDTH - ASTEROID_W / 2.0f - 10.0f) {
+            direction.x = -abs(direction.x);      // zmień kierunek na ujemny w osi X
+            bounceSound.play();                   // odtwórz dźwięk odbicia
+        }
+
+        // Odbicie od górnej krawędzi ekranu
+        if (position.y < ASTEROID_H / 2.0f + 17.0f) {
+            direction.y = abs(direction.y);       // zmień kierunek na dodatni w osi Y
+            bounceSound.play();                   // odtwórz dźwięk odbicia
+        }
+
+        // Odbicie od dolnej krawędzi ekranu
+        else if (position.y > SCREEN_HEIGHT - ASTEROID_H / 2.0f - 10.0f) {
+            direction.y = -abs(direction.y);      // zmień kierunek na ujemny w osi Y
+            bounceSound.play();                   // odtwórz dźwięk odbicia
+        }
+    }
+
+
+    void render(sf::RenderWindow& window) override {
+        sf::Transform transform;
+        transform.translate(position).rotate(angle);
+        window.draw(shape, transform);
+    }
+
+private:
+    sf::VertexArray shape;
+    float life;
+    sf::Vector2f direction;
+    sf::SoundBuffer bounceBuffer;
+    sf::Sound bounceSound;
+};
+
 // Funkcja główna programu
 int main()
 {
@@ -142,6 +237,8 @@ int main()
 
     // Dodanie gracza do gry
     objects.push_back(new Player());
+    // Dodanie asteroidy do gry
+    objects.push_back(new Asteroid(sf::Vector2f(1, 1)));
 
     // Główna pętla gry
     while (window.isOpen()) {
