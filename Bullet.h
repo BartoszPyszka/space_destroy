@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "GameLogic.h"
+#include "Physics.h"
+#include "Player.h"
 
 constexpr float BULLET_SPEED = 400.0f;       // Prêdkoœæ pocisku
 constexpr float BULLET_LIFE = 3.0f;          // Czas ¿ycia pocisku

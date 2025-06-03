@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "Bullet.h"
 #include "GameLogic.h"
+#include "Asteroid.h"
+#include "Physics.h"
 
 constexpr float PLAYER_W = 4.0f;             // Szerokoœæ gracza
 constexpr float PLAYER_H = 4.0f;             // Wysokoœæ gracza

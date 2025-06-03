@@ -3,6 +3,11 @@
 Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
     : GameObject(position, 0.0f), direction(direction), shape(sf::TrianglesFan, 6), life()
 {
+
+    can_damage = false;
+    alive = true;
+    timer = 0;
+
     // Kszta³t asteroidy 
     shape[0].position = { 0, 30 };
     shape[1].position = { 30, 15 };
@@ -64,9 +69,31 @@ sf::Vector2f Asteroid::getRandomPosition()
     return { xAxis(gen), yAxis(gen) };
 }
 
+const sf::VertexArray& Asteroid::getVertexArray() const
+{
+    return shape;
+}
+
 void Asteroid::render(sf::RenderWindow& window)
 {
     sf::Transform transform;
     transform.translate(position).rotate(angle);
     window.draw(shape, transform);
+}
+
+float Asteroid::getLife() {
+    return life;
+}
+
+bool Asteroid::updateAsteroid(float deltaTime) {
+    if (timer <= ASTEROID_DELAY) {
+        timer += deltaTime;
+    }
+
+    else {
+        timer = 0;
+        can_damage = true;
+    }
+
+    return can_damage;
 }

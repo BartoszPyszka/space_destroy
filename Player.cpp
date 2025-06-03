@@ -50,6 +50,40 @@ void Player::update(float deltaTime)
         sf::Vector2f direction = { std::cos(radians), std::sin(radians) };
         GameLogic::toAddList.push_back(new Bullet(position, direction));
     }
+
+    sf::Transform playerTransform = sf::Transform().translate(position).rotate(angle);
+
+    for (size_t i = 0; i < GameLogic::objects.size(); i++)
+    {
+        if (typeid(*GameLogic::objects[i]) == typeid(Asteroid)) {
+            Asteroid* asteroid = dynamic_cast<Asteroid*>(GameLogic::objects[i]);
+
+            // Initial immortality
+            if (asteroid->getLife() < ASTEROID_HIT_TIME) {
+                continue;
+            }
+
+            //// Make me hurt after delay
+            //if (!asteroid->updateColour(deltaTime)) {
+            //    continue;
+            //}
+
+            // Check if we are still alive?
+            if (!asteroid->alive) {
+                continue;
+            }
+
+            sf::Transform asteroidTransform = sf::Transform().translate(asteroid->position).rotate(asteroid->angle);
+
+            if (physics::intersects(physics::getTransformed(shape, playerTransform),
+                physics::getTransformed(asteroid->getVertexArray(), asteroidTransform))) {
+                GameLogic::gameOver();
+            }
+            
+        }
+
+    }
+
 }
 
 void Player::render(sf::RenderWindow& window)
