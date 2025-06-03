@@ -8,9 +8,7 @@
 class GameObject {
 public:
     // Konstruktor inicjalizuj¹cy pozycjê i k¹t obrotu obiektu
-    GameObject(sf::Vector2f pos, float ang)
-        : position(pos), angle(ang) {
-    }
+    GameObject(sf::Vector2f pos, float ang);
 
     // Wirtualny destruktor – umo¿liwia poprawne 
     // niszczenie obiektów pochodnych
