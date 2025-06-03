@@ -35,13 +35,13 @@ Projekt zespołowy wykonany przez:
 | Sterowanie statkiem (prędkość i kierunek) | Bartosz Pyszka |
 | Losowe generowanie asteroid i ich ruch | Bartosz Pyszka |
 | Strzelanie pociskami | Bartosz Pyszka |
+| Płynne poruszanie się obiektów | Bartosz Pyszka |
 | Kolizje pocisków z asteroidami | B. Pyszka & M. Podhajny |
 | Kolizje statku z asteroidami | B. Pyszka & M. Podhajny |
 | Licznik punktów i wyświetlanie wyniku | B. Pyszka & M. Podhajny |
 | Obsługa końca gry i restart | B. Pyszka & M. Podhajny |
-| Płynne poruszanie się obiektów | Bartosz Pyszka |
-| Zapis danych gracza (imię, czas, punkty) przy starcie | Maciej Podhajny |
-| Zapis wyniku końcowego (jeśli lepszy niż poprzedni) | Bartosz Pyszka |
+| Zapis danych gracza (imię, czas, punkty) przy zakończeniu sesji | B. Pyszka & M. Podhajny |
+| Zapis wyniku końcowego (jeśli lepszy niż poprzedni) | B. Pyszka & M. Podhajny |
 | Animacje wybuchów, tekstury obiektów | Maciej Podhajny |
 | Efekty dźwiękowe (strzały, wybuchy) | Maciej Podhajny |
 | Zapisywanie/wczytywanie stanu gry | Maciej Podhajny |
