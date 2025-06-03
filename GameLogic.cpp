@@ -7,9 +7,18 @@ std::list<std::vector<GameObject*>::const_iterator> GameLogic::toRemoveList{};
 std::list<GameObject*> GameLogic::toAddList{};
 float GameLogic::asteroidSpawnTime{};
 size_t GameLogic::score{};
-bool GameLogic::isGameOver{};
+size_t GameLogic::highScore{};
 sf::Text GameLogic::scoreText{};
 sf::Font GameLogic::font{}; 
+sf::Text GameLogic::gameOverText{};
+sf::Text GameLogic::continueText{};
+GameLogic::State GameLogic::state{};
+sf::Text GameLogic::exitText{};
+sf::Text GameLogic::titleText{};
+sf::Text GameLogic::playText{};
+sf::Text GameLogic::menuText{};
+sf::Text GameLogic::highScoreText{};
+
 
 void GameLogic::init()
 {
@@ -18,21 +27,77 @@ void GameLogic::init()
     scoreText.setFont(font);
     scoreText.setPosition(sf::Vector2f(10, 10));
     scoreText.setCharacterSize(40);
+
+    gameOverText.setFont(font);
+    gameOverText.setPosition(sf::Vector2f(250, 200));
+    gameOverText.setCharacterSize(80);
+    gameOverText.setString("Game Over!");
+
+    continueText.setFont(font);
+    continueText.setPosition(sf::Vector2f(180, 500));
+    continueText.setCharacterSize(30);
+    continueText.setString("Press B to continue...");
+
+    titleText.setFont(font);
+    titleText.setPosition(sf::Vector2f(250, 200));
+    titleText.setCharacterSize(80);
+    titleText.setString("Space Destroy!!!");
+
+    playText.setFont(font);
+    playText.setPosition(sf::Vector2f(400, 500));
+    playText.setCharacterSize(20);
+    playText.setString("Press P to play");
+
+    exitText.setFont(font);
+    exitText.setPosition(sf::Vector2f(10, 10));
+    exitText.setCharacterSize(30);
+    exitText.setString("Press Esc to exit");
+
+    menuText.setFont(font);
+    menuText.setPosition(sf::Vector2f(140, 540));
+    menuText.setCharacterSize(30);
+    menuText.setString("Press E to return to menu");
+
+    highScoreText.setFont(font);
+    highScoreText.setPosition(sf::Vector2f(10, 850));
+    highScoreText.setCharacterSize(30);
+    highScoreText.setString("High Score: " + std::to_string(highScore));
+
+    state = MENU;
+
 }
 
 void GameLogic::begin() {
 
-    isGameOver = false;
+    state = PLAYING;
     objects.push_back(new Player());
     asteroidSpawnTime = ASTEROID_SPAWN_TIME;
+    score = 0;
 }
 
 void GameLogic::update(sf::RenderWindow& window, float deltaTime) {
-    
-    window.clear(sf::Color::Black);
 
-    GameLogic::toAddList.clear();
-    GameLogic::toRemoveList.clear();
+    if (state == MENU)
+    {
+        window.draw(playText);
+        window.draw(titleText);
+        window.draw(exitText);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        {
+            begin();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            window.close();
+        }
+
+        return;
+    }
+
+    toAddList.clear();
+    toRemoveList.clear();
 
     asteroidSpawnTime -= deltaTime;
 
@@ -62,16 +127,33 @@ void GameLogic::update(sf::RenderWindow& window, float deltaTime) {
     scoreText.setString("Score: " + std::to_string(score));
     window.draw(scoreText);
 
-    if (isGameOver)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && state == PLAYING)
+    {
+        state = MENU;
+    }
+
+    if (state == GAME_OVER)
     {
         objects.clear();
-        begin();
-        score = 0;
+        window.draw(gameOverText);
+        window.draw(continueText);
+        window.draw(menuText);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+        {
+            begin();
+
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+        {
+            state = MENU;
+        }
     }
 }
 
 void GameLogic::gameOver()
 {
-    isGameOver = true;
+    state = GAME_OVER;
 }
     

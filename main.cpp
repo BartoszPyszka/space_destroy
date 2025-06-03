@@ -11,6 +11,24 @@
 #include "Asteroid.h"
 #include "GameLogic.h"
 
+// =================== Sta³e ===================
+
+// =================== Klasa bazowa GameObject ===================
+
+
+// =================== Zarz¹dzanie obiektami gry ===================
+
+
+// =================== Klasa Bullet (pocisk) ===================
+
+
+// =================== Klasa Player ===================
+
+
+// =================== Klasa Asteroid ===================
+
+
+// =================== Funkcja main ===================
 int main()
 {
     constexpr unsigned int windowWidth = 1200;
@@ -21,7 +39,6 @@ int main()
     sf::Clock clock;
 
     GameLogic::init();
-    GameLogic::begin();
 
     while (window.isOpen()) {
         float deltaTime = clock.restart().asSeconds();
@@ -32,6 +49,8 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        window.clear(sf::Color::Black);
 
         GameLogic::update(window, deltaTime);
 

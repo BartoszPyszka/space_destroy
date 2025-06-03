@@ -31,13 +31,11 @@ public:
 
     bool can_damage;
     bool alive;
-    bool special;
+    //bool special;
 
 private:
     sf::VertexArray shape;
     float life;
     float timer;
     sf::Vector2f direction;
-    sf::SoundBuffer bounceBuffer;
-    sf::Sound bounceSound;
 };

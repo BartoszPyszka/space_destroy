@@ -34,20 +34,16 @@ void Asteroid::update(float deltaTime)
     // Odbicia od œcian (x i y)
     if (position.x < ASTEROID_W / 2.0f + 17.0f) {
         direction.x = abs(direction.x);
-        bounceSound.play();
     }
     else if (position.x > SCREEN_WIDTH - ASTEROID_W / 2.0f - 10.0f) {
         direction.x = -abs(direction.x);
-        bounceSound.play();
     }
 
     if (position.y < ASTEROID_H / 2.0f + 17.0f) {
         direction.y = abs(direction.y);
-        bounceSound.play();
     }
     else if (position.y > SCREEN_HEIGHT - ASTEROID_H / 2.0f - 10.0f) {
         direction.y = -abs(direction.y);
-        bounceSound.play();
     }
 }
 

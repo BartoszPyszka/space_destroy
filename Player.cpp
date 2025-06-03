@@ -63,11 +63,6 @@ void Player::update(float deltaTime)
                 continue;
             }
 
-            //// Make me hurt after delay
-            //if (!asteroid->updateColour(deltaTime)) {
-            //    continue;
-            //}
-
             // Check if we are still alive?
             if (!asteroid->alive) {
                 continue;
