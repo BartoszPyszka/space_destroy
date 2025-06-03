@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include <SFML/Audio.hpp>
-#include <iostream>
 #include <random>
 
 constexpr float ASTEROID_SPIN = 40.0f;       // Prêdkoœæ obrotu asteroidy

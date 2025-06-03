@@ -1,6 +1,7 @@
 #include "GameLogic.h"
 #include "Asteroid.h"
 #include "Player.h"
+#include <fstream>
 
 std::vector<GameObject*> GameLogic::objects{};  
 std::list<std::vector<GameObject*>::const_iterator> GameLogic::toRemoveList{};
@@ -22,6 +23,12 @@ sf::Text GameLogic::highScoreText{};
 
 void GameLogic::init()
 {
+    std::ifstream file("score.dat", std::ios::binary | std::ios::in);
+    if (file.is_open()) {
+        file.read(reinterpret_cast<char*>(&highScore), sizeof(size_t));
+        file.close();
+    }
+
     font.loadFromFile("font.ttf");
 
     scoreText.setFont(font);
@@ -82,6 +89,7 @@ void GameLogic::update(sf::RenderWindow& window, float deltaTime) {
         window.draw(playText);
         window.draw(titleText);
         window.draw(exitText);
+        window.draw(highScoreText);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         {
@@ -154,6 +162,20 @@ void GameLogic::update(sf::RenderWindow& window, float deltaTime) {
 
 void GameLogic::gameOver()
 {
+    if (score > highScore) {
+        highScore = score;
+        std::ofstream file("score.dat", std::ios::binary | std::ios::out);
+        if (file.is_open()) {
+            file.write(reinterpret_cast<const char*>(&highScore), sizeof(size_t));
+            file.close();
+        }
+        else {
+            printf("Blad zapisu rekordu do pliku\n");
+        }
+        highScoreText.setString("High Score: " + std::to_string(highScore));
+
+    }
+
     state = GAME_OVER;
 }
     

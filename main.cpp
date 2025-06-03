@@ -11,24 +11,6 @@
 #include "Asteroid.h"
 #include "GameLogic.h"
 
-// =================== Sta³e ===================
-
-// =================== Klasa bazowa GameObject ===================
-
-
-// =================== Zarz¹dzanie obiektami gry ===================
-
-
-// =================== Klasa Bullet (pocisk) ===================
-
-
-// =================== Klasa Player ===================
-
-
-// =================== Klasa Asteroid ===================
-
-
-// =================== Funkcja main ===================
 int main()
 {
     constexpr unsigned int windowWidth = 1200;

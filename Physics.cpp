@@ -1,5 +1,5 @@
 #include "Physics.h"
-
+// Kolizja pocisk - asteroida
 bool physics::intersects(const sf::Vector2f& point, const sf::VertexArray& polygon)
 {
     // Zmienna przechowuj¹ca liczbê punktów przeciêcia promienia z bokami wielok¹ta.
@@ -32,7 +32,7 @@ bool physics::intersects(const sf::Vector2f& point, const sf::VertexArray& polyg
     // Jeœli liczba przeciêæ jest nieparzysta, punkt jest wewn¹trz wielok¹ta.
     return intersectionCount % 2 == 1;
 }
-
+// Kolizja gracz - asteroida, przy u¿yciu algorytmu SAT 
 bool physics::intersects(const sf::VertexArray& poly1, const sf::VertexArray& poly2) {
     // Lambda do sprawdzania osi separacji
     auto checkSeparatingAxis = [](const sf::VertexArray& polyA, const sf::VertexArray& polyB) -> bool {
