@@ -64,9 +64,9 @@ void GameLogic::update(sf::RenderWindow& window, float deltaTime) {
 
     if (isGameOver)
     {
+        objects.clear();
         begin();
         score = 0;
-        objects.clear();
     }
 }
 
