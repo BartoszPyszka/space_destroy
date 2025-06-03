@@ -35,9 +35,7 @@ int main()
         // gry (np. poruszanie obiektów, obs³ugê 
         // kolizji, renderowanie).
         GameLogic::update(window, deltaTime);
-
-        // Wyœwietla wszystkie elementy w oknie
-        window.display();
+        
     }
 
     return 0;
