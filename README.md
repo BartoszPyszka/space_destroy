@@ -25,7 +25,7 @@ Projekt zespołowy wykonany przez:
   - `Spacja`: wystrzał pocisku z dzioba statku
 
 ### 💥 Kolizje:
-- **Statek - asteroida**: utrata punktu życia
+- **Statek - asteroida**: przegrana rozgrywka
 - **Pocisk - asteroida**: zniszczenie obu, przyznanie punktów
 
 ## ⚙️ Funkcjonalności
@@ -53,9 +53,6 @@ Projekt zespołowy wykonany przez:
 2. **Ekran główny** – prezentuje wynik, liczbę żyć oraz przyciski restartu/wyjścia.
 3. **Ekran gry** – widok gry z aktywnym statkiem, asteroidami, punktami i interakcją.
 
-## 📊 Diagram
-Diagram obrazujący relacje pomiędzy komponentami gry, przepływ danych oraz interakcje obiektów znajduje się w katalogu `/docs/diagram.pdf`.
-
 ## 🛠️ Technologie
 - C++
 - Biblioteka do grafiki (SFML)
@@ -64,12 +61,12 @@ Diagram obrazujący relacje pomiędzy komponentami gry, przepływ danych oraz in
 ## 💾 Instalacja i uruchomienie
 1. Sklonuj repozytorium:
 ```bash
-git clone https://github.com/nazwa-uzytkownika/space-destroy.git
+git clone https://github.com/BartoszPyszka/space-destroy.git
 cd space-destroy
 ```
 2. Uruchom grę:
 ```bash
-game.exe
+space-destroy.exe
 ```
 
 ## 📁 Struktura katalogów
@@ -77,9 +74,8 @@ game.exe
 space-destroy/
 │
 ├── assets/            # Tekstury, dźwięki
-├── docs/              # Makiety, diagramy
 ├── saves/             # Zapisy gier i wyników
-├── main.py            # Główny plik gry
+├── main.cpp            # Główny plik gry
 └── README.md          # Dokumentacja projektu
 ```
 
