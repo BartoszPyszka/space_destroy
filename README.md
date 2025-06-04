@@ -75,6 +75,8 @@ space-destroy/
 │
 ├── assets/            # Tekstury, dźwięki
 ├── saves/             # Zapisy gier i wyników
+├── include/             # Pliki nagłówkowe
+├── src/             # Kody i deklaracje obiektów
 ├── main.cpp            # Główny plik gry
 └── README.md          # Dokumentacja projektu
 ```
