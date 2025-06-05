@@ -6,22 +6,41 @@ Bullet::Bullet(sf::Vector2f startPos, sf::Vector2f dir)
     direction(dir),         // Kierunek ruchu (znormalizowany wektor)
     lifetime(BULLET_LIFE),  // Czas ¿ycia ustawiony na maksymaln¹ wartoœæ
     GameObject(startPos, 0.0f)  // Inicjalizacja pozycji i k¹ta obrotu
-{
+{   
     shape.setFillColor(sf::Color::Green);  // Czerwony kolor pocisku
+    // Za³aduj dŸwiêk (sprawdŸ czy siê wczyta³)
+    if (!soundBuffer.loadFromFile("D:\\Projekt\\SFML\\SFML\\laserShoot.wav")) {
+        // Obs³u¿ b³¹d wczytania pliku (np. wypisz komunikat)
+        printf("Error loading shoot\n");
+    }
+    else {
+        sound.setBuffer(soundBuffer);
+        sound.play();  // Odtwórz dŸwiêk raz na start pocisku
+    }
 }
 
 void Bullet::update(float deltaTime)
 {
-    // Aktualizacja pozycji pocisku
-    // Porusza siê w ustalonym kierunku ze sta³¹ prêdkoœci¹
-    position += direction * BULLET_SPEED * deltaTime;
+    // Jeœli pocisk jest w stanie wybuchu, czekaj a¿ dŸwiêk siê skoñczy
+    if (exploding) {
+        if (sound.getStatus() == sf::Sound::Stopped) {
+            // DŸwiêk zakoñczony, oznacz do usuniêcia
+            for (size_t i = 0; i < GameLogic::objects.size(); ++i) {
+                if (GameLogic::objects[i].get() == this) {
+                    GameLogic::toRemoveIndices.push_back(i);
+                    break;
+                }
+            }
+        }
+        return;  // nie ruszamy siê podczas wybuchu
+    }
 
-    // Odliczanie czasu ¿ycia pocisku
+    // Normalna aktualizacja pozycji i ¿ycia pocisku
+    position += direction * BULLET_SPEED * deltaTime;
     lifetime -= deltaTime;
 
-    // Mechanika znikania pocisku po up³ywie czasu ¿ycia
     if (lifetime <= 0.0f) {
-        // ZnajdŸ i oznacz ten pocisk do usuniêcia
+        // Jeœli pocisk po prostu "umiera" (bez wybuchu), od razu usuwamy
         for (size_t i = 0; i < GameLogic::objects.size(); ++i) {
             if (GameLogic::objects[i].get() == this) {
                 GameLogic::toRemoveIndices.push_back(i);
@@ -33,22 +52,29 @@ void Bullet::update(float deltaTime)
 
     // Sprawdzanie kolizji z asteroidami
     for (size_t i = 0; i < GameLogic::objects.size(); i++) {
-        // SprawdŸ czy obiekt jest asteroid¹
         if (typeid(*GameLogic::objects[i]) == typeid(Asteroid)) {
             Asteroid* asteroid = dynamic_cast<Asteroid*>(GameLogic::objects[i].get());
-
-            // Przygotuj transformacjê asteroidy (pozycja + rotacja)
             sf::Transform transform = sf::Transform()
                 .translate(asteroid->position)
                 .rotate(asteroid->angle);
 
-            // SprawdŸ kolizjê pocisku z asteroid¹
             if (physics::intersects(position,
                 physics::getTransformed(asteroid->getVertexArray(), transform))) {
 
-                lifetime = 0.0f;  // Oznacz pocisk do usuniêcia
+                // Za³aduj i odtwórz dŸwiêk wybuchu
+                if (!soundBuffer.loadFromFile("D:\\Projekt\\SFML\\SFML\\explosion.wav")) {
+                    printf("Error loading explosion sound\n");
+                }
+                else {
+                    sound.setBuffer(soundBuffer);
+                    sound.play();
 
-                // ZnajdŸ i oznacz asteroidê do usuniêcia
+                    // Ustaw flagê wybuchu - pocisk siê nie usuwa od razu
+                    exploding = true;
+                    shape.setFillColor(sf::Color::Transparent);
+                }
+
+                // Oznacz asteroidê do usuniêcia
                 for (size_t j = 0; j < GameLogic::objects.size(); ++j) {
                     if (GameLogic::objects[j].get() == asteroid) {
                         GameLogic::toRemoveIndices.push_back(j);
@@ -56,16 +82,19 @@ void Bullet::update(float deltaTime)
                     }
                 }
 
-                // Aktualizacja punktacji w zale¿noœci od typu asteroidy
+                // Aktualizacja punktacji
                 if (asteroid->lucky) {
-                    GameLogic::score += 15;  // Bonus za szczêœliw¹ asteroidê
+                    GameLogic::score += 15;
                 }
                 else if (asteroid->unlucky) {
-                    GameLogic::score += -10; // Kara za pechow¹ asteroidê
+                    GameLogic::score += -10;
                 }
                 else {
-                    GameLogic::score += 5;  // Standardowa punktacja
+                    GameLogic::score += 5;
                 }
+
+                // Nie ruszamy wiêcej po kolizji
+                break;
             }
         }
     }

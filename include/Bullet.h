@@ -34,4 +34,7 @@ private:
     sf::CircleShape shape;      // Okr¹g³y kszta³t pocisku (prosta reprezentacja wizualna)
     sf::Vector2f direction;     // Znormalizowany wektor kierunku ruchu
     float lifetime;             // Pozosta³y czas ¿ycia pocisku w sekundach
+    sf::SoundBuffer soundBuffer;
+    sf::Sound sound;
+    bool exploding = false;
 };
