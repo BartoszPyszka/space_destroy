@@ -9,7 +9,7 @@ Bullet::Bullet(sf::Vector2f startPos, sf::Vector2f dir)
 {   
     shape.setFillColor(sf::Color::Green);  // Czerwony kolor pocisku
     // Za³aduj dŸwiêk (sprawdŸ czy siê wczyta³)
-    if (!soundBuffer.loadFromFile("D:\\Projekt\\SFML\\SFML\\laserShoot.wav")) {
+    if (!soundBuffer.loadFromFile("Assets\\audio\\laserShoot.wav")) {
         // Obs³u¿ b³¹d wczytania pliku (np. wypisz komunikat)
         printf("Error loading shoot\n");
     }
@@ -62,7 +62,7 @@ void Bullet::update(float deltaTime)
                 physics::getTransformed(asteroid->getVertexArray(), transform))) {
 
                 // Za³aduj i odtwórz dŸwiêk wybuchu
-                if (!soundBuffer.loadFromFile("D:\\Projekt\\SFML\\SFML\\explosion.wav")) {
+                if (!soundBuffer.loadFromFile("Assets\\audio\\explosion.wav")) {
                     printf("Error loading explosion sound\n");
                 }
                 else {

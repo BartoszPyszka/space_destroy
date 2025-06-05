@@ -49,6 +49,8 @@ private:
     static sf::Text playText;         // Przycisk rozpoczêcia gry
     static sf::Text exitText;         // Przycisk wyjœcia
     static sf::Text playerNameText;   // Pole na nazwê gracza
+    static sf::Texture backgroundTexture;
+    static sf::Sprite backgroundSprite;
 
     // ----- Stany gry -----
     enum State {

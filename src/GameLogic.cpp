@@ -26,6 +26,8 @@ sf::Text GameLogic::scoreText{};
 sf::Text GameLogic::titleText{};
 sf::Text GameLogic::menuText{};
 sf::Text GameLogic::playText{};
+sf::Texture GameLogic::backgroundTexture;
+sf::Sprite GameLogic::backgroundSprite;
 
 void GameLogic::init()
 {
@@ -40,6 +42,11 @@ void GameLogic::init()
     if (!font.loadFromFile("font.ttf")) {
         printf("Error loading font\n");
     }
+    
+    if (!backgroundTexture.loadFromFile("Assets\\graphics\\BG.png")) {
+        printf("Error loading background texture\n");
+    }
+    backgroundSprite.setTexture(backgroundTexture);
 
     // Konfiguracja tekstu wprowadzania nazwy gracza
     playerNameText.setFont(font);
@@ -97,7 +104,7 @@ void GameLogic::init()
 
     // Ustawienie pocz¹tkowego stanu gry
     state = ENTERING_NAME;
-    if (!playerTexture.loadFromFile("D:\\Projekt\\SFML\\SFML\\Move.png")) {
+    if (!playerTexture.loadFromFile("Assets\\graphics\\Move.png")) {
         printf("Error loading player texture\n");
     }
 }
@@ -149,7 +156,7 @@ void GameLogic::update(sf::RenderWindow& window, float deltaTime)
 
     // Czyszczenie okna
     window.clear();
-
+    window.draw(backgroundSprite);
     // Renderowanie odpowiedniego ekranu w zale¿noœci od stanu gry
     if (state == ENTERING_NAME) {
         // Ekran wprowadzania nazwy
