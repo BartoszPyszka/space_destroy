@@ -7,7 +7,7 @@ Bullet::Bullet(sf::Vector2f startPos, sf::Vector2f dir)
     lifetime(BULLET_LIFE),  // Czas ¿ycia ustawiony na maksymaln¹ wartoœæ
     GameObject(startPos, 0.0f)  // Inicjalizacja pozycji i k¹ta obrotu
 {
-    shape.setFillColor(sf::Color::Red);  // Czerwony kolor pocisku
+    shape.setFillColor(sf::Color::Green);  // Czerwony kolor pocisku
 }
 
 void Bullet::update(float deltaTime)

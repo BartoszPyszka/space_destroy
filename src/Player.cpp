@@ -1,25 +1,35 @@
 #include "Player.h"
 
 // Konstruktor gracza - inicjalizuje podstawowe w³aœciwoœci
-Player::Player()
-    : GameObject({ 500, 500 }, 0.0f),  // Start na œrodku ekranu, skierowany w prawo
-    shape(sf::LineStrip, 5),         // Przygotowanie kszta³tu z 5 wierzcho³ków
-    shootTimer(0.0f)                 // Mo¿na strzelaæ od razu
+Player::Player(sf::Texture& texture)
+    : GameObject({ 500, 500 }, 0.0f),
+    Playersprite(texture),
+    PlayercurrentFrame(1),
+    PlayertotalFrames(6),                // 7 klatek w spritesheet
+    PlayerframeTime(0.2f),
+    PlayerframeTimer(0.0f),
+    PlayerframeSize(192, 164)
 {
-    // Definicja kszta³tu statku 
-    shape[0].position = { 10.f, 0.f };   
-    shape[1].position = { -10.f, -20.f };
-    shape[2].position = { 0.f, 0.f };    
-    shape[3].position = { -10.f, 20.f }; 
-    shape[4].position = shape[0].position;
-
-    // Ustawienie bia³ego koloru gracza
-    for (size_t i = 0; i < shape.getVertexCount(); ++i)
-        shape[i].color = sf::Color::White;
+    Playersprite.setPosition(position);
+    Playersprite.setOrigin(PlayerframeSize.x / 2.0f, PlayerframeSize.y / 2.0f);
+    Playersprite.setTextureRect(sf::IntRect(0, 0, PlayerframeSize.x, PlayerframeSize.y));
 }
 
 void Player::update(float deltaTime)
 {
+        // Obs³uga ruchu, kolizji itd...
+
+        // Animacja
+    PlayerframeTimer += deltaTime;
+        if (PlayerframeTimer >= PlayerframeTime) {
+            PlayerframeTimer = 0.0f;
+            PlayercurrentFrame = (PlayercurrentFrame + 1) % PlayertotalFrames;
+
+            Playersprite.setTextureRect(sf::IntRect(PlayercurrentFrame * PlayerframeSize.x, 0, PlayerframeSize.x, PlayerframeSize.y));
+        }
+
+        Playersprite.setPosition(position);
+        Playersprite.setRotation(angle);  // zak³adamy, ¿e rotation masz z GameObject
     // Aktualizacja timera strza³u (odliczanie do nastêpnego mo¿liwego strza³u)
     shootTimer -= deltaTime;
 
@@ -52,48 +62,61 @@ void Player::update(float deltaTime)
         position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f), SCREEN_WIDTH - PLAYER_W / 2.0f);
         position.y = std::min(std::max(position.y, PLAYER_H / 2.0f + 10.0f), SCREEN_HEIGHT - PLAYER_H / 2.0f);
     }
-
+    sf::Vector2f shootPos = position + sf::Vector2f(std::cos(radians), std::sin(radians)) * 92.f;
     // Mechanika strzelania (spacja)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && shootTimer <= 0.0f) {
         shootTimer = SHOOT_DELAY;  // Reset timera strza³u
         sf::Vector2f direction = { std::cos(radians), std::sin(radians) };
         // Utworzenie nowego pocisku i dodanie do listy obiektów do dodania
-        GameLogic::toAddList.push_back(std::make_unique<Bullet>(position, direction));
+        GameLogic::toAddList.push_back(std::make_unique<Bullet>(shootPos, direction));
     }
 
-    // Przygotowanie transformacji gracza (pozycja + rotacja)
-    sf::Transform playerTransform = sf::Transform().translate(position).rotate(angle);
+    // Tworzymy prostok¹tny polygon (sf::VertexArray) na podstawie sprite'a gracza
 
-    // Sprawdzenie kolizji z asteroidami
+    sf::FloatRect localBounds = Playersprite.getLocalBounds();  // prostok¹t w lokalnych wspó³rzêdnych sprite'a
+
     for (const auto& obj : GameLogic::objects)
     {
         Asteroid* asteroid = dynamic_cast<Asteroid*>(obj.get());
-        if (!asteroid) continue;  // Pomijanie obiektów nie bêd¹cych asteroidami
-
-        // Tymczasowa nieœmiertelnoœæ po uderzeniu (eyeframes)
+        if (!asteroid) continue;
         if (asteroid->getLife() < ASTEROID_HIT_TIME) continue;
-
-        // Pomijanie nieaktywnych asteroid
         if (!asteroid->alive) continue;
 
-        // Przygotowanie transformacji asteroidy
-        sf::Transform asteroidTransform = sf::Transform().translate(asteroid->position).rotate(asteroid->angle);
+        // Tworzymy hitboxy gracza na podstawie sprite 
+        sf::FloatRect localBounds = Playersprite.getLocalBounds();
+        sf::VertexArray playerPolygon(sf::LineStrip, 5);
 
-        // Sprawdzenie kolizji miêdzy graczem a asteroid¹
-        if (physics::intersects(
-            physics::getTransformed(shape, playerTransform),
-            physics::getTransformed(asteroid->getVertexArray(), asteroidTransform))) {
-            GameLogic::gameOver();  // Kolizja = koniec gry
+        //offset pod srodek klatki by hitbox byl w dobym miejscu
+        float offsetX = 96.f;
+        float offsetY = 82.f;
+
+        //kwadraty hitboxu
+        playerPolygon[0].position = { 4.f - offsetX, 50.f - offsetY };
+        playerPolygon[1].position = { 188.f - offsetX, 50.f - offsetY };
+        playerPolygon[2].position = { 188.f - offsetX, 142.f - offsetY };
+        playerPolygon[3].position = { 4.f - offsetX, 142.f - offsetY };
+        playerPolygon[4].position = playerPolygon[0].position;
+
+        sf::Transform playerTransform;
+        playerTransform.translate(position);
+        playerTransform.rotate(angle);
+        sf::VertexArray transformedPlayer = physics::getTransformed(playerPolygon, playerTransform);
+        // Wyciagamy parametry asteroidy
+        sf::Transform asteroidTransform;
+        asteroidTransform.translate(asteroid->position);
+        asteroidTransform.rotate(asteroid->angle);
+        sf::VertexArray transformedAsteroid = physics::getTransformed(asteroid->getVertexArray(), asteroidTransform);
+
+        if (physics::intersects(transformedPlayer, transformedAsteroid)) {
+            
+            GameLogic::gameOver();
         }
     }
 }
 
 void Player::render(sf::RenderWindow& window)
 {
-    // Przygotowanie transformacji (pozycja + rotacja)
-    sf::Transform transform;
-    transform.translate(position).rotate(angle);
-
-    // Narysowanie kszta³tu statku z uwzglêdnieniem transformacji
-    window.draw(shape, transform);
+    Playersprite.setPosition(position);
+    Playersprite.setRotation(angle); // U¿yj angle, jeœli rotation = angle w Twoim GameObject
+    window.draw(Playersprite);
 }

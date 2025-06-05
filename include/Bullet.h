@@ -9,7 +9,7 @@
 #include <memory>        // WskaŸniki inteligentne
 
 // Parametry pocisków
-constexpr float BULLET_SPEED = 300.0f;       // Sta³a prêdkoœæ pocisku w pikselach/sekundê
+constexpr float BULLET_SPEED = 700.0f;       // Sta³a prêdkoœæ pocisku w pikselach/sekundê
 constexpr float BULLET_LIFE = 3.0f;          // Maksymalny czas istnienia pocisku w sekundach
 
 // Klasa reprezentuj¹ca pocisk wystrzeliwany przez gracza

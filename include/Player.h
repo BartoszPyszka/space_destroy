@@ -22,7 +22,13 @@ constexpr float SHOOT_DELAY = 0.5f;          // Czas wymagany miêdzy kolejnymi s
 class Player : public GameObject {
 public:
     // Konstruktor inicjuj¹cy podstawowe wartoœci gracza
-    Player();
+    Player(sf::Texture& texture);
+    sf::Sprite Playersprite;
+    sf::Vector2i PlayerframeSize;
+    int PlayercurrentFrame;
+    int PlayertotalFrames = 4; // Ustaw odpowiedni¹ liczbê
+    float PlayerframeTime;     // Ile czasu miêdzy klatkami
+    float PlayerframeTimer;    // Licznik czasu
 
     // G³ówna metoda aktualizuj¹ca logikê gracza co klatkê:
     // - obs³uga wejœcia

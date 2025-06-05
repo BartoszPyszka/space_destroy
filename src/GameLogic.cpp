@@ -5,6 +5,7 @@ std::vector<std::unique_ptr<GameObject>> GameLogic::objects{};      // Kontener 
 std::list<size_t> GameLogic::toRemoveIndices{};                     // Lista indeksów obiektów do usuniêcia
 std::list<std::unique_ptr<GameObject>> GameLogic::toAddList{};      // Lista nowych obiektów do dodania
 float GameLogic::asteroidSpawnTime{};                               // Czas do pojawienia siê kolejnej asteroidy
+sf::Texture GameLogic::playerTexture;                               // tekstura
 
 sf::Font GameLogic::font{};                                         // Czcionka u¿ywana w interfejsie
 
@@ -96,15 +97,17 @@ void GameLogic::init()
 
     // Ustawienie pocz¹tkowego stanu gry
     state = ENTERING_NAME;
+    if (!playerTexture.loadFromFile("D:\\Projekt\\SFML\\SFML\\Move.png")) {
+        printf("Error loading player texture\n");
+    }
 }
 
 void GameLogic::begin()
 {
     // Rozpoczêcie nowej gry
     state = PLAYING;
-
-    // Dodanie gracza do œwiata gry
-    objects.push_back(std::make_unique<Player>());
+    // £adowanie txt i animacji 
+    objects.push_back(std::make_unique<Player>(playerTexture));
 
     // Ustawienie czasu do pojawienia siê pierwszej asteroidy
     asteroidSpawnTime = ASTEROID_SPAWN_TIME;

@@ -25,6 +25,7 @@ public:
     static std::vector<std::unique_ptr<GameObject>> objects;   // Aktywne obiekty gry
     static std::list<size_t> toRemoveIndices;                  // Indeksy obiektów do usuniêcia
     static std::list<std::unique_ptr<GameObject>> toAddList;   // Obiekty do dodania
+    static sf::Texture playerTexture;
 
     // ----- Stan gry -----
     static size_t score;     // Aktualny wynik gracza
