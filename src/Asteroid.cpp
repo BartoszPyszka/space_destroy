@@ -81,31 +81,33 @@ bool Asteroid::isUnlucky() {
 // Aktualizuje stan asteroidy co klatkê
 void Asteroid::update(float deltaTime)
 {
-    life += deltaTime; // Aktualizacja czasu ¿ycia
-
-    // Aktualizacja pozycji zgodnie z kierunkiem i prêdkoœci¹
+    life += deltaTime;
     position += ASTEROID_SPEED * direction * deltaTime;
-
-    // Obracanie asteroidy
     angle += ASTEROID_SPEED * deltaTime;
 
-    // Obs³uga odbiæ od krawêdzi ekranu
-    // Lewa krawêdŸ
-    if (position.x < ASTEROID_W / 2.0f + 17.0f) {
-        direction.x = abs(direction.x); // Odbicie w prawo
+    // Uzyskaj rozmiar ekranu z globalnego Ÿród³a (przyk³ad)
+    float screenWidth = static_cast<float>(SCREEN_WIDTH);
+    float screenHeight = static_cast<float>(SCREEN_HEIGHT);
+
+    float halfWidth = ASTEROID_W / 2.0f;
+    float halfHeight = ASTEROID_H / 2.0f;
+
+    if (position.x < halfWidth) {
+        position.x = halfWidth;
+        direction.x = std::abs(direction.x);
     }
-    // Prawa krawêdŸ
-    else if (position.x > SCREEN_WIDTH - ASTEROID_W / 2.0f - 10.0f) {
-        direction.x = -abs(direction.x); // Odbicie w lewo
+    else if (position.x > screenWidth - halfWidth) {
+        position.x = screenWidth - halfWidth;
+        direction.x = -std::abs(direction.x);
     }
 
-    // Górna krawêdŸ
-    if (position.y < ASTEROID_H / 2.0f + 17.0f) {
-        direction.y = abs(direction.y); // Odbicie w dó³
+    if (position.y < halfHeight) {
+        position.y = halfHeight;
+        direction.y = std::abs(direction.y);
     }
-    // Dolna krawêdŸ
-    else if (position.y > SCREEN_HEIGHT - ASTEROID_H / 2.0f - 10.0f) {
-        direction.y = -abs(direction.y); // Odbicie w górê
+    else if (position.y > screenHeight - halfHeight) {
+        position.y = screenHeight - halfHeight;
+        direction.y = -std::abs(direction.y);
     }
 }
 

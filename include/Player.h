@@ -13,7 +13,7 @@
 // (wartoœci dobrane eksperymentalnie dla odpowiedniego balansu rozgrywki)
 constexpr float PLAYER_W = 4.0f;             // Szerokoœæ hitboxu gracza w jednostkach œwiata gry
 constexpr float PLAYER_H = 4.0f;             // Wysokoœæ hitboxu gracza w jednostkach œwiata gry
-constexpr float TURN_SPEED = 200.0f;         // Wra¿liwoœæ sterowania - im wy¿sza wartoœæ, tym szybsze obroty
+constexpr float TURN_SPEED = 300.0f;         // Wra¿liwoœæ sterowania - im wy¿sza wartoœæ, tym szybsze obroty
 constexpr float PLAYER_SPEED = 200.0f;       // Bazowa prêdkoœæ poruszania siê statku (przy pe³nym przyœpieszeniu)
 constexpr float SHOOT_DELAY = 0.5f;          // Czas wymagany miêdzy kolejnymi strza³ami (limit szybkostrzelnoœci)
 

@@ -57,21 +57,29 @@ void Player::update(float deltaTime)
 
     // Poruszanie siê do ty³u (klawisz S) - 3x wolniej ni¿ do przodu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        position.x -= std::cos(radians) * PLAYER_SPEED * deltaTime / 3;
-        position.y -= std::sin(radians) * PLAYER_SPEED * deltaTime / 3;
+        position.x -= std::cos(radians) * PLAYER_SPEED * deltaTime / 2;
+        position.y -= std::sin(radians) * PLAYER_SPEED * deltaTime / 2;
 
         // Analogiczne sprawdzenie granic ekranu
         position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f), SCREEN_WIDTH - PLAYER_W / 2.0f);
         position.y = std::min(std::max(position.y, PLAYER_H / 2.0f + 10.0f), SCREEN_HEIGHT - PLAYER_H / 2.0f);
     }
-    sf::Vector2f shootPos = position + sf::Vector2f(std::cos(radians), std::sin(radians)) * 92.f;
-    // Mechanika strzelania (spacja)
+    sf::Vector2f forward = { std::cos(radians), std::sin(radians) };
+    sf::Vector2f perpendicular = { -forward.y, forward.x };
+
+    sf::Vector2f cannonBase = position + forward * 54.f; // 64 - 10
+    sf::Vector2f topCannon = cannonBase - perpendicular * 0.1f;
+    sf::Vector2f bottomCannon = cannonBase + perpendicular * 20.f;
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && shootTimer <= 0.0f) {
-        shootTimer = SHOOT_DELAY;  // Reset timera strza³u
-        sf::Vector2f direction = { std::cos(radians), std::sin(radians) };
-        // Utworzenie nowego pocisku i dodanie do listy obiektów do dodania
-        GameLogic::toAddList.push_back(std::make_unique<Bullet>(shootPos, direction));
+        shootTimer = SHOOT_DELAY;
+        sf::Vector2f direction = forward;
+
+        GameLogic::toAddList.push_back(std::make_unique<Bullet>(topCannon, direction));
+        GameLogic::toAddList.push_back(std::make_unique<Bullet>(bottomCannon, direction));
     }
+
+
 
     // Tworzymy prostok¹tny polygon (sf::VertexArray) na podstawie sprite'a gracza
 
@@ -93,10 +101,10 @@ void Player::update(float deltaTime)
         float offsetY = 82.f;
 
         //kwadraty hitboxu
-        playerPolygon[0].position = { 4.f - offsetX, 50.f - offsetY };
-        playerPolygon[1].position = { 188.f - offsetX, 50.f - offsetY };
-        playerPolygon[2].position = { 188.f - offsetX, 142.f - offsetY };
-        playerPolygon[3].position = { 4.f - offsetX, 142.f - offsetY };
+        playerPolygon[0].position = { 56.f - offsetX, 66.f - offsetY };
+        playerPolygon[1].position = { 154.f - offsetX, 66.f - offsetY };
+        playerPolygon[2].position = { 154.f - offsetX, 128.f - offsetY };
+        playerPolygon[3].position = { 56.f - offsetX, 128.f - offsetY };
         playerPolygon[4].position = playerPolygon[0].position;
 
         sf::Transform playerTransform;
