@@ -65,9 +65,7 @@ git clone https://github.com/BartoszPyszka/space-destroy.git
 cd space-destroy
 ```
 2. Uruchom grę:
-```bash
-space-destroy.exe
-```
+przeciagnij cmakelista.txt do qt i skompiluj 
 
 ## 📁 Struktura katalogów
 ```
