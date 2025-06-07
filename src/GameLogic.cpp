@@ -224,7 +224,7 @@ void GameLogic::update(sf::RenderWindow& window, float deltaTime)
         }
 
         // Aktualizacja i wyœwietlanie wyniku
-        scoreText.setString("Score: " + std::to_string(score));
+        scoreText.setString("Score: " + std::to_string((score)));
         window.draw(scoreText);
     }
     else if (state == GAME_OVER) {

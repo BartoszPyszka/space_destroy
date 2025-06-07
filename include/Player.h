@@ -23,12 +23,23 @@ class Player : public GameObject {
 public:
     // Konstruktor inicjuj¹cy podstawowe wartoœci gracza
     Player(sf::Texture& texture);
+    sf::Texture boostTexture;
+    sf::Texture* originalTexture;
     sf::Sprite Playersprite;
     sf::Vector2i PlayerframeSize;
     int PlayercurrentFrame;
     int PlayertotalFrames = 4; // Ustaw odpowiedni¹ liczbê
     float PlayerframeTime;     // Ile czasu miêdzy klatkami
     float PlayerframeTimer;    // Licznik czasu
+    enum class BonusType { None, FastShoot, FastMove, Invincible };
+
+
+    BonusType currentBonus = BonusType::None;
+    float bonusTimer = 0.0f;  // ile jeszcze trwa bonus
+
+    float shootDelayBase = SHOOT_DELAY;     // bazowe wartoœci
+    float playerSpeedBase = PLAYER_SPEED;
+    bool invincible = false;
 
     // G³ówna metoda aktualizuj¹ca logikê gracza co klatkê:
     // - obs³uga wejœcia
@@ -49,4 +60,9 @@ private:
 
     // Licznik kontroluj¹cy opóŸnienie miêdzy strza³ami
     float shootTimer;
+
+    //dzwieki bonusu
+    sf::SoundBuffer bonusBuffer;
+    sf::Sound bonusSound;
+
 };

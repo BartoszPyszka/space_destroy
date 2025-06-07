@@ -7,11 +7,23 @@ Player::Player(sf::Texture& texture)
     : GameObject({ 500, 500 }, 0.0f),
     Playersprite(texture),
     PlayercurrentFrame(1),
-    PlayertotalFrames(6),                // 7 klatek w spritesheet
+    PlayertotalFrames(5),                // 7 klatek w spritesheet
     PlayerframeTime(0.2f),
     PlayerframeTimer(0.0f),
     PlayerframeSize(192, 164)
 {
+    originalTexture = &texture;  // zapamiêtaj oryginaln¹ teksturê
+
+    if (!boostTexture.loadFromFile("Assets//graphics//boost.png")) {
+        printf("Error loading boost texture\n");
+    }
+    if (!bonusBuffer.loadFromFile("Assets/audio/bonus.mp3")) {
+        printf("Error loading bonus sound\n");
+    }
+    else {
+        bonusSound.setBuffer(bonusBuffer);
+    }
+
     Playersprite.setPosition(position);
     Playersprite.setOrigin(PlayerframeSize.x / 2.0f, PlayerframeSize.y / 2.0f);
     Playersprite.setTextureRect(sf::IntRect(0, 0, PlayerframeSize.x, PlayerframeSize.y));
@@ -19,7 +31,68 @@ Player::Player(sf::Texture& texture)
 
 void Player::update(float deltaTime)
 {
-        // Obs³uga ruchu, kolizji itd...
+    // Obs³uga bonusów
+    if (currentBonus != BonusType::None) {
+        bonusTimer -= deltaTime;
+        if (bonusTimer <= 0.0f) {
+            currentBonus = BonusType::None;
+            shootDelayBase = SHOOT_DELAY;
+            playerSpeedBase = PLAYER_SPEED;
+            invincible = false;
+        }
+    }
+    else {
+        // Losowe przyznanie bonusu co jakiœ czas
+        static float bonusSpawnTimer = 0.0f;
+        bonusSpawnTimer += deltaTime;
+        if (bonusSpawnTimer >= 15.f) {
+            bonusSpawnTimer = 0.0f;
+
+            int r = rand() % 3;
+            bonusTimer = 5.0f;  // Czas trwania bonusu
+
+            switch (r) {
+            case 0:
+                currentBonus = BonusType::FastShoot;
+                shootDelayBase = SHOOT_DELAY / 10.0f;
+                break;
+            case 1:
+                currentBonus = BonusType::FastMove;
+                playerSpeedBase = PLAYER_SPEED * 3.f;
+                break;
+            case 2:
+                currentBonus = BonusType::Invincible;
+                invincible = true;
+                break;
+            }
+            bonusSound.play();
+
+        }
+    }
+    // Zmiana wygladu na nieœmiertelnoœæ
+    if (invincible) {
+        // Miganie co 0.2 sekundy
+        static float blinkTimer = 0.0f;
+        blinkTimer += deltaTime;
+        if (blinkTimer >= 0.2f) blinkTimer = 0.0f;
+
+        if (blinkTimer < 0.1f)
+            Playersprite.setColor(sf::Color(100, 200, 255, 180)); // widoczny
+        else
+            Playersprite.setColor(sf::Color(100, 200, 255, 80)); // pó³przezroczysty
+    }
+    else {
+        Playersprite.setColor(sf::Color::White);
+    }
+    // Zmiana animacji na bonusie predkosci
+    if (currentBonus == BonusType::FastMove) {
+        Playersprite.setTexture(boostTexture);
+    }
+    else {
+        Playersprite.setTexture(*originalTexture);
+    }
+
+
 
         // Animacja
     PlayerframeTimer += deltaTime;
@@ -47,8 +120,8 @@ void Player::update(float deltaTime)
     // Poruszanie siê do przodu (klawisz W)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         // Obliczenie nowej pozycji na podstawie kierunku
-        position.x += std::cos(radians) * PLAYER_SPEED * deltaTime;
-        position.y += std::sin(radians) * PLAYER_SPEED * deltaTime;
+        position.x += std::cos(radians) * playerSpeedBase * deltaTime;
+        position.y += std::sin(radians) * playerSpeedBase * deltaTime;
 
         // Sprawdzenie granic ekranu (z marginesem 10 pikseli od krawêdzi)
         position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f), SCREEN_WIDTH - PLAYER_W / 2.0f);
@@ -57,8 +130,8 @@ void Player::update(float deltaTime)
 
     // Poruszanie siê do ty³u (klawisz S) - 3x wolniej ni¿ do przodu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        position.x -= std::cos(radians) * PLAYER_SPEED * deltaTime / 2;
-        position.y -= std::sin(radians) * PLAYER_SPEED * deltaTime / 2;
+        position.x -= std::cos(radians) * playerSpeedBase * deltaTime / 2;
+        position.y -= std::sin(radians) * playerSpeedBase * deltaTime / 2;
 
         // Analogiczne sprawdzenie granic ekranu
         position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f), SCREEN_WIDTH - PLAYER_W / 2.0f);
@@ -72,7 +145,7 @@ void Player::update(float deltaTime)
     sf::Vector2f bottomCannon = cannonBase + perpendicular * 20.f;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && shootTimer <= 0.0f) {
-        shootTimer = SHOOT_DELAY;
+        shootTimer = shootDelayBase;
         sf::Vector2f direction = forward;
 
         GameLogic::toAddList.push_back(std::make_unique<Bullet>(topCannon, direction));
@@ -118,8 +191,9 @@ void Player::update(float deltaTime)
         sf::VertexArray transformedAsteroid = physics::getTransformed(asteroid->getVertexArray(), asteroidTransform);
 
         if (physics::intersects(transformedPlayer, transformedAsteroid)) {
-            
-            GameLogic::gameOver();
+            if (!invincible) {
+                GameLogic::gameOver();
+            }
         }
     }
 }
