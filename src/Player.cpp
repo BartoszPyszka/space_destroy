@@ -1,5 +1,7 @@
 #include "Player.h"
-
+#include <cmath>        // std::sin, std::cos, M_PI
+#include <algorithm>    // std::min, std::max
+#include <memory>       // std::make_unique
 // Konstruktor gracza - inicjalizuje podstawowe w³aœciwoœci
 Player::Player(sf::Texture& texture)
     : GameObject({ 500, 500 }, 0.0f),

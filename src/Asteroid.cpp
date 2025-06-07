@@ -1,5 +1,5 @@
 #include "Asteroid.h"
-
+sf::Texture Asteroid::textures[3];
 // Konstruktor asteroidy - inicjalizuje w³aœciwoœci i wygl¹d
 Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
     : GameObject(position, 0.0f),  // Inicjalizacja pozycji i k¹ta obrotu
@@ -8,33 +8,52 @@ Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
     life(0.0f)                  // Inicjalizacja czasu ¿ycia
 {
     // Domyœlne ustawienia stanu asteroidy
-    can_damage = false;  // Pocz¹tkowo nie mo¿e zadawaæ obra¿eñ
-    alive = true;        // Asteroida zaczyna jako aktywna
-    timer = 0.0f;       // Reset licznika czasu
+    can_damage = false;
+    alive = true;
+    timer = 0.0f;
 
-    // Definicja kszta³tu asteroidy 
-    shape[0].position = { 0, 30 };    
-    shape[1].position = { 30, 15 };   
-    shape[2].position = { 30, -15 };  
-    shape[3].position = { 0, -30 };   
-    shape[4].position = { -30, -15 }; 
-    shape[5].position = { -30, 15 };  
+    // Definicja kszta³tu asteroidy
+    shape[0].position = { 0, 30 };
+    shape[1].position = { 30, 15 };
+    shape[2].position = { 30, -15 };
+    shape[3].position = { 0, -30 };
+    shape[4].position = { -30, -15 };
+    shape[5].position = { -30, 15 };
 
-    // Ustawienie koloru br¹zowego dla wszystkich wierzcho³ków
     for (size_t i = 0; i < shape.getVertexCount(); i++) {
-        shape[i].color = sf::Color(112, 42, 42);
+        shape[i].color = sf::Color::Transparent;
     }
 
-    // Sprawdzenie czy asteroida jest "szczêœliwa" (10% szans)
+    // Sprawdzenie czy asteroida jest "szczêœliwa" lub "pechowa"
     lucky = isLucky();
-
-    // Jeœli nie jest szczêœliwa, sprawdŸ czy jest "pechowa" (1% szans)
     if (!lucky) {
         unlucky = isUnlucky();
     }
     else {
-        unlucky = false; // Nie mo¿e byæ jednoczeœnie szczêœliwa i pechowa
+        unlucky = false;
     }
+
+    // ===== NAK£ADANIE SPRITE'A GRAFICZNEGO =====
+    int textureIndex = 0; // 0 - zwyk³a
+    if (lucky) textureIndex = 1;       // 1 - szczêœliwa
+    else if (unlucky) textureIndex = 2; // 2 - pechowa
+
+    sprite.setTexture(textures[textureIndex]);
+
+    // Skalowanie do ok. 60x60 (bo grafika ma 512x512)
+    float targetSize = 60.0f;
+    float scale = targetSize / 512.0f;
+    sprite.setScale(scale, scale);
+
+    // Ustaw œrodek na œrodek tekstury
+    sprite.setOrigin(256.0f, 256.0f);
+}
+
+bool Asteroid::loadTextures()
+{
+    return textures[0].loadFromFile("Assets\\graphics\\asteroid1.png") &&
+        textures[1].loadFromFile("Assets\\graphics\\asteroid2.png") &&
+        textures[2].loadFromFile("Assets\\graphics\\asteroid3.png");
 }
 
 // Sprawdza czy asteroida jest "szczêœliwa" (dodatkowe punkty)
@@ -44,13 +63,6 @@ bool Asteroid::isLucky() {
     std::uniform_int_distribution<int> dist(1, 10); // 1 na 10 szans
 
     bool luckyRoll = (dist(gen) == 1); // 10% prawdopodobieñstwo
-
-    if (luckyRoll) {
-        // Zmiana koloru na ¿ó³ty dla szczêœliwej asteroidy
-        for (size_t i = 0; i < shape.getVertexCount(); i++) {
-            shape[i].color = sf::Color::Yellow;
-        }
-    }
 
     return luckyRoll;
 }
@@ -62,13 +74,6 @@ bool Asteroid::isUnlucky() {
     std::uniform_int_distribution<int> dist(1, 100); // 1 na 100 szans
 
     bool unluckyRoll = (dist(gen) == 1) && !lucky; // 1% i nie mo¿e byæ szczêœliwa
-
-    if (unluckyRoll) {
-        // Zmiana koloru na niebieski dla pechowej asteroidy
-        for (size_t i = 0; i < shape.getVertexCount(); i++) {
-            shape[i].color = sf::Color::Blue;
-        }
-    }
 
     return unluckyRoll;
 }
@@ -140,8 +145,14 @@ const sf::VertexArray& Asteroid::getVertexArray() const
 void Asteroid::render(sf::RenderWindow& window)
 {
     sf::Transform transform;
-    transform.translate(position).rotate(angle); // Pozycja + rotacja
-    window.draw(shape, transform); // Rysowanie kszta³tu
+    transform.translate(position).rotate(angle);
+
+    // Rysuj najpierw sprite, potem shape (np. jako kolizjê)
+    sf::RenderStates states;
+    states.transform = transform;
+
+    window.draw(sprite, states);       // Tekstura
+    window.draw(shape, transform);     // Kszta³t (kolizja lub efekt)
 }
 
 // Zwraca czas ¿ycia asteroidy od ostatniego uderzenia

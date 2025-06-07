@@ -51,6 +51,8 @@ public:
 
     // Sprawdza czy asteroida jest "pechowa" (karna)
     bool isUnlucky();
+    // Funkcja do za³adowania tekstur
+    static bool loadTextures();
 
     // Flagi stanu asteroidy:
     bool can_damage;  // Czy mo¿e zadawaæ obra¿enia
@@ -63,4 +65,6 @@ private:
     float life;             // Czas od ostatniego uderzenia
     float timer;            // Licznik czasu ogólnego przeznaczenia
     sf::Vector2f direction; // Kierunek ruchu (znormalizowany wektor)
+    sf::Sprite sprite;    // Sprite nak³adany na asteroidê
+    static sf::Texture textures[3]; // Tekstury wspó³dzielone przez wszystkie asteroidy
 };

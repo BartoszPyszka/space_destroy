@@ -1,5 +1,13 @@
 #include "GameLogic.h"
-
+#include <SFML/Graphics.hpp> 
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>             
 // Inicjalizacja statycznych pól klasy GameLogic
 std::vector<std::unique_ptr<GameObject>> GameLogic::objects{};      // Kontener aktywnych obiektów gry
 std::list<size_t> GameLogic::toRemoveIndices{};                     // Lista indeksów obiektów do usuniêcia
@@ -47,6 +55,9 @@ void GameLogic::init()
         printf("Error loading background texture\n");
     }
     backgroundSprite.setTexture(backgroundTexture);
+    if (!Asteroid::loadTextures()) {
+        printf("B³¹d ³adowania tekstur asteroid!");
+    }
 
     // Konfiguracja tekstu wprowadzania nazwy gracza
     playerNameText.setFont(font);
