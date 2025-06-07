@@ -82,4 +82,6 @@ space-destroy/
 ```
 
 ## 📌 Uwagi końcowe
-Projekt jest rozwijany zespołowo — przypisane funkcje mogą ulec zmianie w toku pracy. Cały zespół współpracuje przy testach i optymalizacji gry.
+Projekt jest rozwijany zespołowo — przypisane funkcje mogą ulec zmianie w toku pracy. Cały zespół współpracuje przy testach i optymalizacji gry. 
+milestoney: v0.1, v0.2.2, v0.4, v0.5.1, v0.7.1, v0.8, v0.10.3, v0.11
+wspólnie robione: v0.7.1, v0.8, v0.9 
