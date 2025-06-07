@@ -47,7 +47,7 @@ void GameLogic::init()
     }
 
     // £adowanie czcionki
-    if (!font.loadFromFile("font.ttf")) {
+    if (!font.loadFromFile("Assets\\font.ttf")) {
         printf("Error loading font\n");
     }
     
