@@ -6,6 +6,7 @@
 #include "Physics.h"     // Detekcja kolizji
 #include "Player.h"      // Klasa gracza (potrzebna do relacji strzelania)
 #include "Asteroid.h"    // Cel pocisków
+#include "Explosion.h"
 #include <memory>        // WskaŸniki inteligentne
 
 // Parametry pocisków

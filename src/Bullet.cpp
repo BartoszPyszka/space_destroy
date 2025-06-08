@@ -82,15 +82,19 @@ void Bullet::update(float deltaTime)
                     }
                 }
 
-                // Aktualizacja punktacji
+
+                // Aktualizacja punktacji i postawienie odpowiedniej animacji
                 if (asteroid->lucky) {
                     GameLogic::score += 15;
+                    GameLogic::toAddList.push_back(std::make_unique<Explosion>(asteroid->position, Explosion::ExplosionColorType::Lucky));
                 }
                 else if (asteroid->unlucky) {
                     GameLogic::score += -10;
+                    GameLogic::toAddList.push_back(std::make_unique<Explosion>(asteroid->position, Explosion::ExplosionColorType::Unlucky));
                 }
                 else {
                     GameLogic::score += 5;
+                    GameLogic::toAddList.push_back(std::make_unique<Explosion>(asteroid->position, Explosion::ExplosionColorType::Normal));
                 }
 
                 // Nie ruszamy wiêcej po kolizji
