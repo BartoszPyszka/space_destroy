@@ -1,5 +1,13 @@
 #include "Bullet.h"
-
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 // Konstruktor pocisku - inicjalizuje w³aœciwoœci i wygl¹d
 Bullet::Bullet(sf::Vector2f startPos, sf::Vector2f dir)
     : shape(3.0f),            // Okr¹g o promieniu 3 pikseli

@@ -1,8 +1,15 @@
 #include "Physics.h"
 #include <SFML/Graphics.hpp>     // Dla sf::Vector2f, sf::VertexArray, sf::Transform
 #include <limits>                // Dla std::numeric_limits
-#include <cmath>                 // Dla sqrt()
-#include <algorithm>            // Dla std::min, std::max
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 // Kolizja pocisk - asteroida
 bool physics::intersects(const sf::Vector2f& point, const sf::VertexArray& polygon)
 {

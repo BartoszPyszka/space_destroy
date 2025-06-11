@@ -1,6 +1,14 @@
 #include "Explosion.h"
 #include <cstdlib>
-#include <cmath> 
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 
 // Funkcja pomocnicza do losowania floatów z zakresu [min, max]
 static float randomFloat(float min, float max) {

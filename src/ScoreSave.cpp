@@ -1,4 +1,13 @@
 #include "ScoreSave.h"
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 
 /**
  * Generuje string z aktualn¹ dat¹ i czasem.

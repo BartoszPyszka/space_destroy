@@ -7,7 +7,8 @@
 #include <string>                
 #include <cstdio>               
 #include <functional>            
-#include <algorithm>             
+#include <algorithm>  
+#include <cmath>
 // Inicjalizacja statycznych pól klasy GameLogic
 std::vector<std::unique_ptr<GameObject>> GameLogic::objects{};      // Kontener aktywnych obiektów gry
 std::list<size_t> GameLogic::toRemoveIndices{};                     // Lista indeksów obiektów do usuniêcia

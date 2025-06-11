@@ -1,4 +1,13 @@
 #include "Asteroid.h"
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 sf::Texture Asteroid::textures[3];
 // Konstruktor asteroidy - inicjalizuje w³aœciwoœci i wygl¹d
 Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)

@@ -2,6 +2,14 @@
 #include <cmath>        // std::sin, std::cos, M_PI
 #include <algorithm>    // std::min, std::max
 #include <memory>       // std::make_unique
+#include <vector>                
+#include <list>                                 
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 // Konstruktor gracza - inicjalizuje podstawowe w³aœciwoœci
 Player::Player(sf::Texture& texture)
     : GameObject({ 500, 500 }, 0.0f),

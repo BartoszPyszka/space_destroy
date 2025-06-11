@@ -5,6 +5,15 @@
 #include "Globals.h"     // Sta³e globalne i ustawienia
 #include <SFML/Audio.hpp> // Efekty dŸwiêkowe
 #include <random>        // Generowanie losowych wartoœci
+#include <vector>                
+#include <list>                  
+#include <memory>                
+#include <fstream>               
+#include <string>                
+#include <cstdio>               
+#include <functional>            
+#include <algorithm>  
+#include <cmath>
 
 // Parametry asteroid
 constexpr float ASTEROID_SPIN = 40.0f;       // Prêdkoœæ obrotu (stopnie/sekundê)
