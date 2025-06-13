@@ -82,26 +82,6 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 | v0.15     | Dodano animację wybuchu asteroid                 |
 | v1.0.1    | Finalna wersja gry                 |
 
-## 🖥️ Makiety UI
-
-1. **Ekran startowy** – ekran powitalny z opcją wpisania imienia i rozpoczęcia gry.
-2. **Ekran główny** – prezentuje wynik, liczbę żyć oraz przyciski restartu/wyjścia.
-3. **Ekran gry** – widok gry z aktywnym statkiem, asteroidami, punktami i interakcją.
-
-## 🛠️ Technologie
-- C++
-- Biblioteka do grafiki (SFML)
-- Pliki tekstowe do zapisu wyników i stanów
-
-## 💾 Instalacja i uruchomienie
-1. Sklonuj repozytorium:
-```bash
-git clone https://github.com/BartoszPyszka/space-destroy.git
-cd space-destroy
-```
-2. Uruchom grę:
-przeciagnij cmakelista.txt do qt i skompiluj 
-
 ## 📁 Struktura katalogów
 ```
 space-destroy/
@@ -113,6 +93,3 @@ space-destroy/
 ├── main.cpp            # Główny plik gry
 └── README.md          # Dokumentacja projektu
 ```
-
-## 📌 Uwagi końcowe
-Projekt jest rozwijany zespołowo — przypisane funkcje mogą ulec zmianie w toku pracy. Cały zespół współpracuje przy testach i optymalizacji gry. 
