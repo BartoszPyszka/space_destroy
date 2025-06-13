@@ -69,7 +69,7 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 
 | Wersja    | Data       | Opis                                                                 |
 |-----------|------------|----------------------------------------------------------------------|
-| v0.1      | 2025-05-31 | Start projektu: utworzenie szkieletu gry, struktura folderów         |
+| v0.1      | 2025-05-31 | utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie.         |
 | v0.2.2    | 2025-05-31 | Ruch statku i obracanie                                              |
 | v0.4      | 2025-06-01 | Dodanie strzelania i podstawowej walki                              |
 | v0.5.1    | 2025-06-01 | Obsługa kolizji, podstawowa interakcja obiektów                     |
