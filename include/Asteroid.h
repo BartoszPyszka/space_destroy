@@ -1,79 +1,77 @@
 #pragma once
 
-// Nag³ówki niezbêdne do dzia³ania klasy Asteroid
-#include "GameObject.h"  // Bazowa klasa dla obiektów gry
-#include "Globals.h"     // Sta³e globalne i ustawienia
-#include <SFML/Audio.hpp> // Efekty dŸwiêkowe
-#include <random>        // Generowanie losowych wartoœci
-#include <vector>                
-#include <list>                  
-#include <memory>                
-#include <fstream>               
-#include <string>                
-#include <cstdio>               
-#include <functional>            
-#include <algorithm>  
+// Standardowe biblioteki C++ 
+#include <algorithm>
 #include <cmath>
+#include <cstdio>
+#include <fstream>
+#include <functional>
+#include <list>
+#include <memory>
+#include <random>
+#include <string>
+#include <vector>
+
+// Biblioteki zewnÄ™trzne (SFML)
+#include <SFML/Audio.hpp>
+
+// WÅ‚asne nagÅ‚Ã³wki
+#include "GameObject.h"  // Bazowa klasa dla obiektÃ³w gry
+#include "Globals.h"     // StaÅ‚e globalne i ustawienia
 
 // Parametry asteroid
-constexpr float ASTEROID_SPIN = 40.0f;       // Prêdkoœæ obrotu (stopnie/sekundê)
-constexpr float ASTEROID_SPEED = 200.0f;     // Bazowa prêdkoœæ ruchu (piksele/sekundê)
-constexpr float ASTEROID_W = 20.0f;          // Podstawowa szerokoœæ hitboxu
-constexpr float ASTEROID_H = 20.0f;          // Podstawowa wysokoœæ hitboxu
-constexpr float ASTEROID_SPAWN_TIME = 2.0f;  // Czêstotliwoœæ pojawiania siê asteroid (sekundy)
-constexpr float ASTEROID_HIT_TIME = 0.2f;    // Czas klatek nieœmiertelnoœci gracza
-constexpr float ASTEROID_DELAY = 0.2f;       // OpóŸnienie przed ponownym zadawaniem obra¿eñ
+constexpr float ASTEROID_SPIN = 40.0f;       // PrÄ™dkoÅ›Ä‡ obrotu 
+constexpr float ASTEROID_SPEED = 200.0f;     // Bazowa prÄ™dkoÅ›Ä‡ ruchu 
+constexpr float ASTEROID_W = 20.0f;          // Podstawowa szerokoÅ›Ä‡ hitboxu
+constexpr float ASTEROID_H = 20.0f;          // Podstawowa wysokoÅ›Ä‡ hitboxu
+constexpr float ASTEROID_SPAWN_TIME = 2.0f;  // CzÄ™stotliwoÅ›Ä‡ pojawiania siÄ™ asteroid (sekundy)
+constexpr float ASTEROID_HIT_TIME = 0.2f;    // Czas klatek nieÅ›miertelnoÅ›ci gracza
+constexpr float ASTEROID_DELAY = 0.2f;       // OpÃ³Åºnienie przed ponownym zadawaniem obraÅ¼eÅ„
 
-// Klasa reprezentuj¹ca asteroidê w grze
-// Dziedziczy po GameObject, wykorzystuj¹c podstawowe mechaniki pozycji i kolizji
+// Klasa reprezentujÄ…ca asteroidÄ™ w grze
 class Asteroid : public GameObject {
 public:
-    // Konstruktor z domyœlnymi losowymi wartoœciami:
-    // direction - kierunek ruchu (domyœlnie losowy)
-    // position - pozycja startowa (domyœlnie losowa na krawêdzi ekranu)
+    // Konstruktor asteroidy
     Asteroid(sf::Vector2f direction = getRandomDirection(),
         sf::Vector2f position = getRandomPosition());
 
-    // G³ówna metoda aktualizuj¹ca logikê asteroidy
+    // GÅ‚Ã³wna metoda aktualizujÄ…ca logikÄ™ asteroidy
     void update(float deltaTime) override;
 
-    // Generuje losowy wektor kierunku ruchu (znormalizowany)
+    // Generacja losowego kierunku ruchu i pozycji startowej
     static sf::Vector2f getRandomDirection();
-
-    // Generuje losow¹ pozycjê startow¹ na krawêdziach ekranu
     static sf::Vector2f getRandomPosition();
 
-    // Zwraca referencjê do kszta³tu asteroidy (dla detekcji kolizji)
+    // Zwraca ksztaÅ‚t asteroidy (dla detekcji kolizji)
     const sf::VertexArray& getVertexArray() const;
 
-    // Renderuje asteroidê na ekranie
+    // Renderuje asteroidÄ™ na ekranie
     void render(sf::RenderWindow& window) override;
 
-    // Zwraca czas ¿ycia od ostatniego uderzenia
+    // Zwraca czas Å¼ycia od ostatniego uderzenia
     float getLife();
 
     // Aktualizuje stan asteroidy po uderzeniu
     bool updateAsteroid(float deltaTime);
 
-    // Sprawdza czy asteroida jest "szczêœliwa" (dodatkowe punkty)
+    // Rodzaj asteroidy
     bool isLucky();
-
-    // Sprawdza czy asteroida jest "pechowa" (karna)
     bool isUnlucky();
-    // Funkcja do za³adowania tekstur
+
+    // Funkcja do zaÅ‚adowania tekstur
     static bool loadTextures();
 
     // Flagi stanu asteroidy:
-    bool can_damage;  // Czy mo¿e zadawaæ obra¿enia
+    bool can_damage;  
     bool alive;       // Czy asteroida jest aktywna
-    bool lucky;       // Czy to specjalna "szczêœliwa" asteroida
-    bool unlucky;     // Czy to specjalna "pechowa" asteroida
+    bool lucky;       
+    bool unlucky;     
 
 private:
-    sf::VertexArray shape;  // Kszta³t asteroidy (dla renderowania i kolizji)
+    sf::VertexArray shape;  
     float life;             // Czas od ostatniego uderzenia
-    float timer;            // Licznik czasu ogólnego przeznaczenia
-    sf::Vector2f direction; // Kierunek ruchu (znormalizowany wektor)
-    sf::Sprite sprite;    // Sprite nak³adany na asteroidê
-    static sf::Texture textures[3]; // Tekstury wspó³dzielone przez wszystkie asteroidy
+    float timer;            // Licznik czasu ogÃ³lnego przeznaczenia
+    sf::Vector2f direction; 
+    sf::Sprite sprite;    
+    static sf::Texture textures[3]; 
 };
