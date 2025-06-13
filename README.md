@@ -49,7 +49,7 @@ Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w k
 | v0.14                      | Maciej Podhajny            | Losowe pojawianie się bonusów                                                  |
 | XXX                      | Maciej Podhajny            | Zapisanie i wczytanie pozycji wszystkich obiektów****                          |
 
-> "*" Zmiana do konceptu - gracz ma jedno życie, nie wiele punktów zdrowia
+> `*` Zmiana do konceptu - gracz ma jedno życie, nie wiele punktów zdrowia
 
 > ** Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Maciej Podhajny); zapis następuje po śmierci gracza
 
