@@ -1,8 +1,8 @@
 #pragma once
-constexpr float M_PI = 3.14159265f;          // Pi (do obliczeñ trygonometrycznych)
+constexpr float M_PI = 3.14159265f;          // Pi (do obliczeÅ„ trygonometrycznych)
 
-constexpr float SCREEN_WIDTH = 1190.0f;      // Szerokoœæ ekranu
-constexpr float SCREEN_HEIGHT = 890.0f;      // Wysokoœæ ekranu
+constexpr float SCREEN_WIDTH = 1190.0f;      // SzerokoÅ›Ä‡ ekranu
+constexpr float SCREEN_HEIGHT = 890.0f;      // WysokoÅ›Ä‡ ekranu
 
 
 
