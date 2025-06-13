@@ -1,30 +1,36 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "GameObject.h"
-#include "GameLogic.h"
+
+// Standardowe biblioteki C++ 
 #include <vector>
 
-// Klasa wybuchu, dziedziczy po GameObject
+// Biblioteki zewnÄ™trzne (SFML)
+#include <SFML/Graphics.hpp>
+
+// WÅ‚asne nagÅ‚Ã³wki
+#include "GameObject.h"
+#include "GameLogic.h"
+
+// Klasa wybuchu 
 class Explosion : public GameObject {
 public:
-    // Typ wybuchu (do zmiany kolorów)
+    // Typ wybuchu (do zmiany kolorÃ³w)
     enum class ExplosionColorType {
         Normal,
         Lucky,
         Unlucky
     };
 
-    // Konstruktor, przyjmuje pozycjê wybuchu i typ koloru
+    // Konstruktor klasy wybuchu
     explicit Explosion(sf::Vector2f pos, ExplosionColorType type = ExplosionColorType::Normal);
 
-    // Aktualizuje stan wybuchu (ko³a i fragmenty)
+    // GÅ‚Ã³wna metoda aktualizujÄ…ca logikÄ™ wybuchu
     void update(float deltaTime) override;
 
-    // Rysuje wybuch na ekranie
+     // Renderuje wybuch na ekranie
     void render(sf::RenderWindow& window) override;
 
 private:
-    // Struktura opisuj¹ca pojedyncze ko³o efektu wybuchu
+    // Struktura opisujÄ…ca pojedyncze koÅ‚o efektu wybuchu
     struct CircleEffect {
         sf::CircleShape shape;
         float maxRadius;
@@ -32,25 +38,27 @@ private:
         float growthRate;
     };
 
-    // Struktura opisuj¹ca fragment meteorytu
+    // Struktura opisujÄ…ca fragment asteroidy
     struct Fragment {
         sf::ConvexShape shape;
         sf::Vector2f velocity;
     };
 
-    float lifetime;                 // Czas ¿ycia wybuchu
-    static constexpr float MAX_LIFETIME = 0.7f;  // Maksymalny czas trwania efeku
+    float lifetime;                
+    static constexpr float MAX_LIFETIME = 0.7f;  
 
-    //Fragmenty animacji
+    // Fragmenty animacji
     CircleEffect yellowCircle;
     CircleEffect redCircle;
     CircleEffect grayCircle;
 
+    // Fragmenty eksplozji (odÅ‚amki)
     std::vector<Fragment> fragments;
 
+    // Kolor efektu wybuchu
     ExplosionColorType colorType;
 
-    // Pomocnicze funkcje do aktualizacji i tworzenia efektów
+    // Pomocnicze funkcje do aktualizacji i tworzenia efektÃ³w
     void updateCircle(CircleEffect& circle, float deltaTime);
     void updateFragments(float deltaTime);
     void createFragments(int count);
