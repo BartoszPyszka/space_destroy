@@ -77,6 +77,8 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 | v0.8      | 2025-06-03 | UI startowe, zapis/wczytywanie stanu gry                            |
 | v0.10.3   | 2025-06-07 | Restart gry i obsługa rekordów                                      |
 | v0.11     | 2025-06-10 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.14.1     | 2025-06-10 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.15     | 2025-06-10 | Stabilizacja wersji do prezentacji/testów końcowych                 |
 
 > Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
 
