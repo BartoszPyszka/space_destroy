@@ -49,21 +49,23 @@ Projekt zespołowy wykonany przez:
 
 ## 📝 Commity
 
-Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
+Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w koncepcie:
 
-| Data       | Autor              | Opis commita                                                                 |
-|------------|-------------------|------------------------------------------------------------------------------|
-| XXX | Bartosz Pyszka     | XXX                 |
-| XXX | Bartosz Pyszka     | XXX                                      |
-| XXX | Bartosz Pyszka     | XXX                               |
-| XXX | Bartosz Pyszka     | XXX                                              |
-| XXX | B. Pyszka & M. Podhajny | XXX               |
-| XXX | Maciej Podhajny    | XXX                             |
-| XXX | Maciej Podhajny    | XXX                   |
-| XXX | B. Pyszka & M. Podhajny | XXX                        |
-| XXX | Maciej Podhajny    | XXX                        |
-| XXX | Bartosz Pyszka     | XXX                      |
-| XXX | Maciej Podhajny    | XXX                 |
+| Wersja commita           | Autor                   |  Funkcjonalność                                                                |
+|--------------------------|-------------------------|--------------------------------------------------------------------------------|
+| XXX                      | Bartosz Pyszka          | Sterowanie statkiem (prędkość i kierunek)                                      |
+| XXX                      | Bartosz Pyszka          | Losowe generowanie asteroid i ich ruch                                         |
+| XXX                      | Bartosz Pyszka          | Strzelanie pociskami                                                           |
+| XXX                      | Bartosz Pyszka          | Płynne poruszanie się obiektów                                                 |
+| XXX                      | B. Pyszka & M. Podhajny | Kolizje pocisków z asteroidami                                                 |
+| XXX                      | B. Pyszka & M. Podhajny | Kolizje statku z asteroidami                                                   |
+| XXX                      | B. Pyszka & M. Podhajny | Obsługa końca gry i restart                                                    |
+| XXX                      | B. Pyszka & M. Podhajny | Zapis danych gracza (imię, czas, punkty) przy zakończeniu sesji                |
+| XXX                      | Maciej Podhajny         | Animacje wybuchów, tekstury obiektów                                           |
+| XXX                      | Maciej Podhajny         | Efekty dźwiękowe (strzały, wybuchy)                                            |
+| XXX                      | Maciej Podhajny         | Losowe pojawianie się bonusów                                                  |
+
+< fff
 
 ## 📍 Kamienie milowe 🗿
 | Wersja    | Opis                                                                 |
