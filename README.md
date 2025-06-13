@@ -49,7 +49,7 @@ Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w k
 | XXX                      | Maciej Podhajny            | Zapisanie i wczytanie pozycji wszystkich obiektów`****`                          |
 | v0.14                      | Maciej Podhajny            | Losowe pojawianie się bonusów                                                  |
 
-
+## 📌 Uwagi 
 > `*` Zmiana do konceptu - gracz ma jedno życie, nie wiele punktów zdrowia
 
 > `**` Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Maciej Podhajny); zapis następuje po śmierci gracza
@@ -57,6 +57,8 @@ Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w k
 > `***` Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Bartosz Pyszka)
 
 > `****` Tego nie udało się wykonać, zadanie nas przerosło
+
+> Commity stworzone od 12-06 do 14-06 są drobnymi zmianami kosmetycznymi, kodu i pliku README
 
 ## 🗿 Kamienie milowe 🗿
 | Wersja     | Opis                                                                 |
