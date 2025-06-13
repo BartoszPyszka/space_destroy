@@ -70,9 +70,7 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 | Wersja    | Data       | Opis                                                                 |
 |-----------|------------|----------------------------------------------------------------------|
 | v0.1      | 31-05 | utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie.         |
-| v0.2.2    | 31-05 | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Klasa została dokładnie opisana komentarzami. 
-Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. 
-Rysowanie gracza: Player jest teraz wyświetlany na ekranie.                                              |
+| v0.2.2    | 31-05 | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Klasa została dokładnie opisana komentarzami. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie.                                              |
 | v0.4      | 01-06 | Dodanie strzelania i podstawowej walki                              |
 | v0.5.1    | 01-06 | Obsługa kolizji, podstawowa interakcja obiektów                     |
 | v0.7.1    | 03-06  | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
