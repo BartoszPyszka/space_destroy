@@ -1,4 +1,7 @@
+// Biblioteki zewnÄ™trzne (SFML)
 #include <SFML/Graphics.hpp>
+
+// WÅ‚asne nagÅ‚Ã³wki
 #include "GameLogic.h"
 
 int main()
@@ -8,32 +11,30 @@ int main()
     constexpr unsigned int windowHeight = 900;
     const std::string windowTitle = "Space Destroy";
 
-    // Tworzy g³ówne okno aplikacji 
+    // Tworzy gÅ‚Ã³wne okno aplikacji 
     sf::RenderWindow window(sf::VideoMode(windowWidth, 
         windowHeight), windowTitle, sf::Style::Titlebar | 
         sf::Style::Close);
 
-    // Zmienna mierz¹ca czas pomiêdzy klatkami, potrzebna
+    // Zmienna mierzÄ…ca czas pomiÄ™dzy klatkami, potrzebna
     // do obliczania deltaTime
     sf::Clock clock;
 
     // Inicjalizacja gry
     GameLogic::init();
 
-    // G³ówna pêtla gry. Dzia³a, dopóki 
+    // GÅ‚Ã³wna pÄ™tla gry. DziaÅ‚a, dopÃ³ki 
     // okno jest otwarte 
     while (window.isOpen()) {
 
-        // Oblicza czas, jaki up³yn¹³ od 
-        // ostatniego odœwie¿enia gry, w sekundach.
+        // Oblicza czas, jaki upÅ‚ynÄ…Å‚ od 
+        // ostatniego odÅ›wieÅ¼enia gry, w sekundach.
         // Metoda `clock.restart()` resetuje 
-        // zegar i zwraca czas, który up³yn¹³ 
+        // zegar i zwraca czas, ktÃ³ry upÅ‚ynÄ…Å‚ 
         // od ostatniego restartu
         float deltaTime = clock.restart().asSeconds();
 
-        // GameLogic::update aktualizuje logikê 
-        // gry (np. poruszanie obiektów, obs³ugê 
-        // kolizji, renderowanie).
+        // Aktualizuje logikÄ™ gry
         GameLogic::update(window, deltaTime);
         
     }
