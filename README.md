@@ -39,23 +39,23 @@ Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w k
 | v0.4                     | Bartosz Pyszka             | Strzelanie pociskami                                                           |
 | v0.2.1;                  | Bartosz Pyszka             | Płynne poruszanie się obiektów                                                 |
 | v0.7                     | B. Pyszka & M. Podhajny    | Kolizje pocisków z asteroidami                                                 |
-| v0.7                     | B. Pyszka & M. Podhajny    | Kolizje statku z asteroidami*                                                  |
+| v0.7                     | B. Pyszka & M. Podhajny    | Kolizje statku z asteroidami`*`                                                  |
 | v0.7                     | B. Pyszka & M. Podhajny    | System punktacji                                                               |
 | v0.8                     | B. Pyszka & M. Podhajny    | Obsługa końca gry i restart                                                    |
-| v0.11                    | B. Pyszka & M. Podhajny**  | Zapis danych gracza (imię, czas, punkty) przy rozpoczęciu sesji**              |
-| v0.9                     | B. Pyszka & M. Podhajny*** | Zapis danych najlepszego gracza (imię, punkty) przy zakończeniu sesji          |
+| v0.11                    | B. Pyszka & M. Podhajny`**`  | Zapis danych gracza (imię, czas, punkty) przy rozpoczęciu sesji`**`              |
+| v0.9                     | B. Pyszka & M. Podhajny`***` | Zapis danych najlepszego gracza (imię, punkty) przy zakończeniu sesji          |
 | v0.11.1; v0.12; v0.12.1.b; v0.13; v0.13a; v0.15                      | Maciej Podhajny            | Animacje wybuchów, tekstury obiektów                                           |
 | v0.12.1                     | Maciej Podhajny            | Efekty dźwiękowe (strzały, wybuchy)                                            |
 | v0.14                      | Maciej Podhajny            | Losowe pojawianie się bonusów                                                  |
-| XXX                      | Maciej Podhajny            | Zapisanie i wczytanie pozycji wszystkich obiektów****                          |
+| XXX                      | Maciej Podhajny            | Zapisanie i wczytanie pozycji wszystkich obiektów`****`                          |
 
 > `*` Zmiana do konceptu - gracz ma jedno życie, nie wiele punktów zdrowia
 
-> ** Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Maciej Podhajny); zapis następuje po śmierci gracza
+> `**` Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Maciej Podhajny); zapis następuje po śmierci gracza
 
-> *** Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Bartosz Pyszka)
+> `***` Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Bartosz Pyszka)
 
-> **** Tego nie udało się wykonać, zadanie nas przerosło
+> `****` Tego nie udało się wykonać, zadanie nas przerosło
 
 ## 🗿 Kamienie milowe 🗿
 | Wersja     | Opis                                                                 |
