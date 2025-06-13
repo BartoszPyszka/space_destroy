@@ -69,17 +69,19 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 
 | Wersja    | Data       | Opis                                                                 |
 |-----------|------------|----------------------------------------------------------------------|
-| v0.1      | 2025-05-31 | utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie.         |
-| v0.2.2    | 2025-05-31 | Ruch statku i obracanie                                              |
-| v0.4      | 2025-06-01 | Dodanie strzelania i podstawowej walki                              |
-| v0.5.1    | 2025-06-01 | Obsługa kolizji, podstawowa interakcja obiektów                     |
-| v0.7.1    | 2025-06-03  | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
-| v0.8      | 2025-06-03 | UI startowe, zapis/wczytywanie stanu gry                            |
-| v0.10.3   | 2025-06-03  | Restart gry i obsługa rekordów                                      |
-| v0.11     | 2025-06-04 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.14.1     | 2025-06-08 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.15     | 2025-06-08 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v1.0.1     | 2025-06-12 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.1      | 31-05 | utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie.         |
+| v0.2.2    | 31-05 | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Klasa została dokładnie opisana komentarzami. 
+Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. 
+Rysowanie gracza: Player jest teraz wyświetlany na ekranie.                                              |
+| v0.4      | 01-06 | Dodanie strzelania i podstawowej walki                              |
+| v0.5.1    | 01-06 | Obsługa kolizji, podstawowa interakcja obiektów                     |
+| v0.7.1    | 03-06  | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
+| v0.8      | 03-06 | UI startowe, zapis/wczytywanie stanu gry                            |
+| v0.10.3   | 03-06  | Restart gry i obsługa rekordów                                      |
+| v0.11     | 04-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.14.1     | 08-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.15     | 08-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v1.0.1     | 12-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
 
 > Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
 
