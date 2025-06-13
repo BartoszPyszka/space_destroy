@@ -70,15 +70,17 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 |-----------|----------------------------------------------------------------------|
 | v0.1      | Utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie. |
 | v0.2.2    | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie. |
-| v0.4      | Dodanie strzelania i podstawowej walki                              |
-| v0.5.1    | Obsługa kolizji, podstawowa interakcja obiektów                     |
-| v0.7.1    | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
-| v0.8      | UI startowe, zapis/wczytywanie stanu gry                            |
-| v0.10.3   | Restart gry i obsługa rekordów                                      |
-| v0.11     | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.14.1   | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.15     | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v1.0.1    | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.4      | Dodano funkcji strzelania                             |
+| v0.5.1    | Dodano klasę Asteroid z ruchem, obrotem i losową generacją.                    |
+| v0.7.1    | Dodano system kolizji pocisk-asteroida, gracz-asteroida oraz systemu punktacji         |
+| v0.8      | Dodano elementu UI: ekranu głównego, ekranu po przegranej. Dodano system ponownej gry                           |
+| v0.9      | Dodano zapis rekordu do pliku i wyświetlanie go w grze                                      |
+| v0.11     | Dodano możliwość wprowadzenia nazwy gracza oraz zapis danych gracza z konkretnej sesji, zastosowano unique_ptr, dodano obszerne komentarze                 |
+| v0.12.1b  | Dodano elementu UI: audio, animacji gracza, efektów dźwiękowych i tła. Zmiany w Player                |
+| v0.13a    | Dodano tekstury asteroid. Dopracowano strzelanie. Zmiana modelu gracza                |
+| v0.14.1   | Dodano system bonusów                 |
+| v0.15     | Dodano animację wybuchu asteroid                 |
+| v1.0.1    | Finalna wersja gry                 |
 
 
 > Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
