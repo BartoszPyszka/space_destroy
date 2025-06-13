@@ -70,12 +70,12 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 |-----------|----------------------------------------------------------------------|
 | v0.1      | Utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie. |
 | v0.2.2    | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie. |
-| v0.4      | Dodano funkcji strzelania                             |
+| v0.4      | Dodano funkcję strzelania                             |
 | v0.5.1    | Dodano klasę Asteroid z ruchem, obrotem i losową generacją.                    |
 | v0.7.1    | Dodano system kolizji pocisk-asteroida, gracz-asteroida oraz systemu punktacji         |
 | v0.8      | Dodano elementu UI: ekranu głównego, ekranu po przegranej. Dodano system ponownej gry                           |
 | v0.9      | Dodano zapis rekordu do pliku i wyświetlanie go w grze                                      |
-| v0.11     | Dodano możliwość wprowadzenia nazwy gracza oraz zapis danych gracza z konkretnej sesji, zastosowano unique_ptr, dodano obszerne komentarze                 |
+| v0.11     | Dodano możliwość wprowadzenia nazwy gracza oraz zapis danych z konkretnej sesji, zastosowano unique_ptr, dodano obszerne komentarze                 |
 | v0.12.1b  | Dodano elementu UI: audio, animacji gracza, efektów dźwiękowych i tła. Zmiany w Player                |
 | v0.13a    | Dodano tekstury asteroid. Dopracowano strzelanie. Zmiana modelu gracza                |
 | v0.14.1   | Dodano system bonusów                 |
