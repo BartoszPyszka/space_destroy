@@ -1,7 +1,7 @@
+// W≈Çasne nag≈Ç√≥wki
 #include "GameObject.h"
 
-// Inicjalizuje konstruktor klasy GameObject, zawierajπcy
-// pozycjÍ i kπt obiektu na wartoúci przekazane jako argumenty 
+// Inicjalizuje konstruktor wszystkich obiekt√≥w gry
 GameObject::GameObject(sf::Vector2f pos, float ang)
 	: position(pos), angle(ang) {
 }
