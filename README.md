@@ -47,6 +47,35 @@ Projekt zespołowy wykonany przez:
 | Zapisywanie/wczytywanie stanu gry | Maciej Podhajny |
 | Losowe pojawianie się bonusów | Maciej Podhajny |
 
+## 📝 Commity
+
+Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
+
+| Data       | Autor              | Opis commita                                                                 |
+|------------|-------------------|------------------------------------------------------------------------------|
+| XXX | Bartosz Pyszka     | XXX                 |
+| XXX | Bartosz Pyszka     | XXX                                      |
+| XXX | Bartosz Pyszka     | XXX                               |
+| XXX | Bartosz Pyszka     | XXX                                              |
+| XXX | B. Pyszka & M. Podhajny | XXX               |
+| XXX | Maciej Podhajny    | XXX                             |
+| XXX | Maciej Podhajny    | XXX                   |
+| XXX | B. Pyszka & M. Podhajny | XXX                        |
+| XXX | Maciej Podhajny    | XXX                        |
+| XXX | Bartosz Pyszka     | XXX                      |
+| XXX | Maciej Podhajny    | XXX                 |
+
+## 📍 Kamienie milowe 🗿
+
+| Milestone | Data       | Opis                                                                 |
+|-----------|------------|----------------------------------------------------------------------|
+| XXX      | XXX | XXX      |
+| XXX      | XXX | XXX                      |
+| XXX      | XXX | XXX               |
+| XXX      | XXX | XXX              |
+
+> Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
+
 ## 🖥️ Makiety UI
 
 1. **Ekran startowy** – ekran powitalny z opcją wpisania imienia i rozpoczęcia gry.
