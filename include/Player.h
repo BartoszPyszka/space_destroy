@@ -1,67 +1,58 @@
 #pragma once
 
-// Nag³ówki zwi¹zane z obs³ug¹ obiektów gry i fizyki
+// Standardowe biblioteki C++ 
+#include <memory>
+
+// WÅ‚asne nagÅ‚Ã³wki
 #include "GameObject.h"
 #include "Globals.h"
 #include "Bullet.h"
 #include "GameLogic.h"
 #include "Asteroid.h"
 #include "Physics.h"
-#include <memory>
 
-// Podstawowe parametry gracza
-// (wartoœci dobrane eksperymentalnie dla odpowiedniego balansu rozgrywki)
-constexpr float PLAYER_W = 4.0f;             // Szerokoœæ hitboxu gracza w jednostkach œwiata gry
-constexpr float PLAYER_H = 4.0f;             // Wysokoœæ hitboxu gracza w jednostkach œwiata gry
-constexpr float TURN_SPEED = 300.0f;         // Wra¿liwoœæ sterowania - im wy¿sza wartoœæ, tym szybsze obroty
-constexpr float PLAYER_SPEED = 200.0f;       // Bazowa prêdkoœæ poruszania siê statku (przy pe³nym przyœpieszeniu)
-constexpr float SHOOT_DELAY = 0.5f;          // Czas wymagany miêdzy kolejnymi strza³ami (limit szybkostrzelnoœci)
+// Parametry gracza
+constexpr float PLAYER_W = 4.0f;             
+constexpr float PLAYER_H = 4.0f;             
+constexpr float TURN_SPEED = 300.0f;         
+constexpr float PLAYER_SPEED = 200.0f;       
+constexpr float SHOOT_DELAY = 0.5f;          
 
-// Klasa gracza - statku kosmicznego sterowanego przez gracza
-// Dziedziczy po GameObject, wykorzystuj¹c podstawowe mechaniki poruszania i kolizji
+// Klasa reprezentujÄ…ca gracza 
 class Player : public GameObject {
 public:
-    // Konstruktor inicjuj¹cy podstawowe wartoœci gracza
+    // Konstruktor inicjujÄ…cy podstawowe wartoÅ›ci gracza
     Player(sf::Texture& texture);
+
+    // WyglÄ…d i animacja
     sf::Texture boostTexture;
     sf::Texture* originalTexture;
     sf::Sprite Playersprite;
     sf::Vector2i PlayerframeSize;
     int PlayercurrentFrame;
-    int PlayertotalFrames = 4; // Ustaw odpowiedni¹ liczbê
-    float PlayerframeTime;     // Ile czasu miêdzy klatkami
+    int PlayertotalFrames = 4; 
+    float PlayerframeTime;     // Ile czasu miÄ™dzy klatkami
     float PlayerframeTimer;    // Licznik czasu
-    enum class BonusType { None, FastShoot, FastMove, Invincible };
 
+    // Typy bonusÃ³w
+    enum class BonusType { None, FastShoot, FastMove, Invincible }; 
 
+    // Bonusy i ich efekty
     BonusType currentBonus = BonusType::None;
-    float bonusTimer = 0.0f;  // ile jeszcze trwa bonus
-
-    float shootDelayBase = SHOOT_DELAY;     // bazowe wartoœci
+    float bonusTimer = 0.0f;  // Ile jeszcze trwa bonus
+    float shootDelayBase = SHOOT_DELAY;     
     float playerSpeedBase = PLAYER_SPEED;
     bool invincible = false;
 
-    // G³ówna metoda aktualizuj¹ca logikê gracza co klatkê:
-    // - obs³uga wejœcia
-    // - ruch i obroty
-    // - strzelanie
-    // - aktualizacja timerów
+    // GÅ‚Ã³wna metoda aktualizujÄ…ca logikÄ™ gracza
     void update(float deltaTime) override;
 
-    // Metoda odpowiedzialna za wizualn¹ reprezentacjê gracza:
-    // - przygotowanie kszta³tu statku
-    // - uwzglêdnienie aktualnej rotacji
-    // - renderowanie do okna gry
+    // Renderuje gracza na ekranie
     void render(sf::RenderWindow& window) override;
 
 private:
-    // Reprezentacja graficzna statku jako zestaw po³¹czonych wierzcho³ków
     sf::VertexArray shape;
-
-    // Licznik kontroluj¹cy opóŸnienie miêdzy strza³ami
     float shootTimer;
-
-    //dzwieki bonusu
     sf::SoundBuffer bonusBuffer;
     sf::Sound bonusSound;
 
