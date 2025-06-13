@@ -1,4 +1,4 @@
-#include "Bullet.h"
+// Standardowe biblioteki C++ 
 #include <vector>                
 #include <list>                  
 #include <memory>                
@@ -8,31 +8,33 @@
 #include <functional>            
 #include <algorithm>  
 #include <cmath>
-// Konstruktor pocisku - inicjalizuje w³aœciwoœci i wygl¹d
+
+// WÅ‚asne nagÅ‚Ã³wki
+#include "Bullet.h"
+
+// Konstruktor pocisku 
 Bullet::Bullet(sf::Vector2f startPos, sf::Vector2f dir)
-    : shape(3.0f),            // Okr¹g o promieniu 3 pikseli
-    direction(dir),         // Kierunek ruchu (znormalizowany wektor)
-    lifetime(BULLET_LIFE),  // Czas ¿ycia ustawiony na maksymaln¹ wartoœæ
-    GameObject(startPos, 0.0f)  // Inicjalizacja pozycji i k¹ta obrotu
+    : shape(3.0f),            
+    direction(dir),        
+    lifetime(BULLET_LIFE),  
+    GameObject(startPos, 0.0f)  
 {   
-    shape.setFillColor(sf::Color::Green);  // Czerwony kolor pocisku
-    // Za³aduj dŸwiêk (sprawdŸ czy siê wczyta³)
+    shape.setFillColor(sf::Color::Green);  // Kolor pocisku - zielony
+    
+    // ZaÅ‚aduj dÅºwiÄ™k 
     if (!soundBuffer.loadFromFile("Assets\\audio\\laserShoot.wav")) {
-        // Obs³u¿ b³¹d wczytania pliku (np. wypisz komunikat)
         printf("Error loading shoot\n");
     }
     else {
         sound.setBuffer(soundBuffer);
-        sound.play();  // Odtwórz dŸwiêk raz na start pocisku
+        sound.play();  
     }
 }
-
+// Aktualizuje stan pocisku 
 void Bullet::update(float deltaTime)
 {
-    // Jeœli pocisk jest w stanie wybuchu, czekaj a¿ dŸwiêk siê skoñczy
     if (exploding) {
         if (sound.getStatus() == sf::Sound::Stopped) {
-            // DŸwiêk zakoñczony, oznacz do usuniêcia
             for (size_t i = 0; i < GameLogic::objects.size(); ++i) {
                 if (GameLogic::objects[i].get() == this) {
                     GameLogic::toRemoveIndices.push_back(i);
@@ -40,15 +42,14 @@ void Bullet::update(float deltaTime)
                 }
             }
         }
-        return;  // nie ruszamy siê podczas wybuchu
+        return;  
     }
 
-    // Normalna aktualizacja pozycji i ¿ycia pocisku
     position += direction * BULLET_SPEED * deltaTime;
     lifetime -= deltaTime;
 
     if (lifetime <= 0.0f) {
-        // Jeœli pocisk po prostu "umiera" (bez wybuchu), od razu usuwamy
+        // JeÅ¼li pocisk po prostu "umiera" (bez wybuchu), od razu usuwamy
         for (size_t i = 0; i < GameLogic::objects.size(); ++i) {
             if (GameLogic::objects[i].get() == this) {
                 GameLogic::toRemoveIndices.push_back(i);
@@ -69,7 +70,7 @@ void Bullet::update(float deltaTime)
             if (physics::intersects(position,
                 physics::getTransformed(asteroid->getVertexArray(), transform))) {
 
-                // Za³aduj i odtwórz dŸwiêk wybuchu
+                // ZaÅ‚aduj i odtwÃ³rz dÅºwiÄ™k wybuchu
                 if (!soundBuffer.loadFromFile("Assets\\audio\\explosion.wav")) {
                     printf("Error loading explosion sound\n");
                 }
@@ -77,12 +78,14 @@ void Bullet::update(float deltaTime)
                     sound.setBuffer(soundBuffer);
                     sound.play();
 
-                    // Ustaw flagê wybuchu - pocisk siê nie usuwa od razu
+                    // Ustaw flagÄ™ wybuchu - pocisk nie usuwa siÄ™ od razu 
                     exploding = true;
+
+                    // WypeÅ‚nienie kolorem przezroczystym
                     shape.setFillColor(sf::Color::Transparent);
                 }
 
-                // Oznacz asteroidê do usuniêcia
+                // Oznacz asteroidÄ™ do usuniÄ™cia
                 for (size_t j = 0; j < GameLogic::objects.size(); ++j) {
                     if (GameLogic::objects[j].get() == asteroid) {
                         GameLogic::toRemoveIndices.push_back(j);
@@ -105,7 +108,6 @@ void Bullet::update(float deltaTime)
                     GameLogic::toAddList.push_back(std::make_unique<Explosion>(asteroid->position, Explosion::ExplosionColorType::Normal));
                 }
 
-                // Nie ruszamy wiêcej po kolizji
                 break;
             }
         }
