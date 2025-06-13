@@ -66,20 +66,20 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 | XXX | Maciej Podhajny    | XXX                 |
 
 ## 📍 Kamienie milowe 🗿
+| Wersja    | Opis                                                                 |
+|-----------|----------------------------------------------------------------------|
+| v0.1      | Utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie. |
+| v0.2.2    | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie. |
+| v0.4      | Dodanie strzelania i podstawowej walki                              |
+| v0.5.1    | Obsługa kolizji, podstawowa interakcja obiektów                     |
+| v0.7.1    | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
+| v0.8      | UI startowe, zapis/wczytywanie stanu gry                            |
+| v0.10.3   | Restart gry i obsługa rekordów                                      |
+| v0.11     | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.14.1   | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.15     | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v1.0.1    | Stabilizacja wersji do prezentacji/testów końcowych                 |
 
-| Wersja    | Data       | Opis                                                                 |
-|-----------|------------|----------------------------------------------------------------------|
-| v0.1      | 31-05 | utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie.         |
-| v0.2.2    | 31-05 | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Klasa została dokładnie opisana komentarzami. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie.                                              |
-| v0.4      | 01-06 | Dodanie strzelania i podstawowej walki                              |
-| v0.5.1    | 01-06 | Obsługa kolizji, podstawowa interakcja obiektów                     |
-| v0.7.1    | 03-06  | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
-| v0.8      | 03-06 | UI startowe, zapis/wczytywanie stanu gry                            |
-| v0.10.3   | 03-06  | Restart gry i obsługa rekordów                                      |
-| v0.11     | 04-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.14.1     | 08-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.15     | 08-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v1.0.1     | 12-06 | Stabilizacja wersji do prezentacji/testów końcowych                 |
 
 > Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
 
