@@ -69,16 +69,17 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 
 | Wersja    | Data       | Opis                                                                 |
 |-----------|------------|----------------------------------------------------------------------|
-| v0.1      | 2025-05-20 | Start projektu: utworzenie szkieletu gry, struktura folderów         |
-| v0.2.2    | 2025-05-21 | Ruch statku i obracanie                                              |
-| v0.4      | 2025-05-25 | Dodanie strzelania i podstawowej walki                              |
-| v0.5.1    | 2025-05-26 | Obsługa kolizji, podstawowa interakcja obiektów                     |
-| v0.7.1    | 2025-06-01 | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
+| v0.1      | 2025-05-31 | Start projektu: utworzenie szkieletu gry, struktura folderów         |
+| v0.2.2    | 2025-05-31 | Ruch statku i obracanie                                              |
+| v0.4      | 2025-06-01 | Dodanie strzelania i podstawowej walki                              |
+| v0.5.1    | 2025-06-01 | Obsługa kolizji, podstawowa interakcja obiektów                     |
+| v0.7.1    | 2025-06-03  | W pełni działająca rozgrywka z punktacją i zakończeniem gry         |
 | v0.8      | 2025-06-03 | UI startowe, zapis/wczytywanie stanu gry                            |
-| v0.10.3   | 2025-06-07 | Restart gry i obsługa rekordów                                      |
-| v0.11     | 2025-06-10 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.14.1     | 2025-06-10 | Stabilizacja wersji do prezentacji/testów końcowych                 |
-| v0.15     | 2025-06-10 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.10.3   | 2025-06-03  | Restart gry i obsługa rekordów                                      |
+| v0.11     | 2025-06-04 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.14.1     | 2025-06-08 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v0.15     | 2025-06-08 | Stabilizacja wersji do prezentacji/testów końcowych                 |
+| v1.0.1     | 2025-06-12 | Stabilizacja wersji do prezentacji/testów końcowych                 |
 
 > Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
 
