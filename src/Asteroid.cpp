@@ -1,4 +1,4 @@
-#include "Asteroid.h"
+// Standardowe biblioteki C++ 
 #include <vector>                
 #include <list>                  
 #include <memory>                
@@ -8,20 +8,25 @@
 #include <functional>            
 #include <algorithm>  
 #include <cmath>
+
+// WÅ‚asne nagÅ‚Ã³wki
+#include "Asteroid.h"
+
 sf::Texture Asteroid::textures[3];
-// Konstruktor asteroidy - inicjalizuje w³aœciwoœci i wygl¹d
+
+// Konstruktor asteroidy 
 Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
-    : GameObject(position, 0.0f),  // Inicjalizacja pozycji i k¹ta obrotu
-    direction(direction),        // Ustawienie kierunku ruchu
-    shape(sf::TrianglesFan, 6),  // Przygotowanie kszta³tu z 6 wierzcho³ków
-    life(0.0f)                  // Inicjalizacja czasu ¿ycia
+    : GameObject(position, 0.0f),  
+    direction(direction),        
+    shape(sf::TrianglesFan, 6),  
+    life(0.0f)                  
 {
-    // Domyœlne ustawienia stanu asteroidy
+    // DomyÅ›lne ustawienia stanu asteroidy
     can_damage = false;
     alive = true;
     timer = 0.0f;
 
-    // Definicja kszta³tu asteroidy
+    // Definicja ksztaÅ‚tu asteroidy
     shape[0].position = { 0, 30 };
     shape[1].position = { 30, 15 };
     shape[2].position = { 30, -15 };
@@ -29,11 +34,12 @@ Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
     shape[4].position = { -30, -15 };
     shape[5].position = { -30, 15 };
 
+    // WypeÅ‚nienie przezroczystym kolorem
     for (size_t i = 0; i < shape.getVertexCount(); i++) {
         shape[i].color = sf::Color::Transparent;
     }
 
-    // Sprawdzenie czy asteroida jest "szczêœliwa" lub "pechowa"
+    // Sprawdzenie czy asteroida jest "szczÄ™Å›liwa" lub "pechowa"
     lucky = isLucky();
     if (!lucky) {
         unlucky = isUnlucky();
@@ -42,9 +48,9 @@ Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
         unlucky = false;
     }
 
-    // ===== NAK£ADANIE SPRITE'A GRAFICZNEGO =====
-    int textureIndex = 0; // 0 - zwyk³a
-    if (lucky) textureIndex = 1;       // 1 - szczêœliwa
+    // NakÅ‚adanie sprite'a graficznego
+    int textureIndex = 0;               // 0 - zwykÅ‚a
+    if (lucky) textureIndex = 1;        // 1 - szczÄ™Å›liwa
     else if (unlucky) textureIndex = 2; // 2 - pechowa
 
     sprite.setTexture(textures[textureIndex]);
@@ -54,10 +60,11 @@ Asteroid::Asteroid(sf::Vector2f direction, sf::Vector2f position)
     float scale = targetSize / 512.0f;
     sprite.setScale(scale, scale);
 
-    // Ustaw œrodek na œrodek tekstury
+    // Ustaw Å›rodek na Å›rodek tekstury
     sprite.setOrigin(256.0f, 256.0f);
 }
 
+// ZaÅ‚adowanie tekstur
 bool Asteroid::loadTextures()
 {
     return textures[0].loadFromFile("Assets\\graphics\\asteroid1.png") &&
@@ -65,42 +72,43 @@ bool Asteroid::loadTextures()
         textures[2].loadFromFile("Assets\\graphics\\asteroid3.png");
 }
 
-// Sprawdza czy asteroida jest "szczêœliwa" (dodatkowe punkty)
+// Sprawdza czy asteroida jest "szczÄ™Å›liwa" (dodatkowe punkty)
 bool Asteroid::isLucky() {
     std::random_device rd;  // Inicjalizacja generatora liczb losowych
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(1, 10); // 1 na 10 szans
 
-    bool luckyRoll = (dist(gen) == 1); // 10% prawdopodobieñstwo
+    bool luckyRoll = (dist(gen) == 1); 
 
     return luckyRoll;
 }
 
-// Sprawdza czy asteroida jest "pechowa" (karna)
+// Sprawdza czy asteroida jest "pechowa" 
 bool Asteroid::isUnlucky() {
     std::random_device rd;  // Inicjalizacja generatora liczb losowych
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(1, 100); // 1 na 100 szans
 
-    bool unluckyRoll = (dist(gen) == 1) && !lucky; // 1% i nie mo¿e byæ szczêœliwa
+    bool unluckyRoll = (dist(gen) == 1) && !lucky; 
 
     return unluckyRoll;
 }
 
-// Aktualizuje stan asteroidy co klatkê
+// Aktualizuje stan asteroidy 
 void Asteroid::update(float deltaTime)
 {
     life += deltaTime;
     position += ASTEROID_SPEED * direction * deltaTime;
     angle += ASTEROID_SPEED * deltaTime;
 
-    // Uzyskaj rozmiar ekranu z globalnego Ÿród³a (przyk³ad)
+    // Uzyskaj rozmiar ekranu 
     float screenWidth = static_cast<float>(SCREEN_WIDTH);
     float screenHeight = static_cast<float>(SCREEN_HEIGHT);
 
     float halfWidth = ASTEROID_W / 2.0f;
     float halfHeight = ASTEROID_H / 2.0f;
 
+    // Odbijanie siÄ™ asteroid
     if (position.x < halfWidth) {
         position.x = halfWidth;
         direction.x = std::abs(direction.x);
@@ -120,53 +128,53 @@ void Asteroid::update(float deltaTime)
     }
 }
 
-// Generuje losowy kierunek ruchu (znormalizowany wektor)
+// Generuje losowy kierunek ruchu 
 sf::Vector2f Asteroid::getRandomDirection()
 {
     std::random_device rd;  // Inicjalizacja generatora liczb losowych
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dist(0.0f, 2.0f * M_PI); // Pe³ny zakres k¹tów
+    std::uniform_real_distribution<float> dist(0.0f, 2.0f * M_PI); // PeÅ‚ny zakres kÄ…tÃ³w
 
-    float angle = dist(gen); // Losowy k¹t
+    float angle = dist(gen); 
     return { cos(angle), sin(angle) }; // Konwersja na wektor kierunku
 }
 
-// Generuje losow¹ pozycjê startow¹ na ekranie
+// Generuje losowÄ… pozycjÄ™ startowÄ… na ekranie
 sf::Vector2f Asteroid::getRandomPosition()
 {
     std::random_device rd;  // Inicjalizacja generatora liczb losowych
     std::mt19937 gen(rd());
 
-    // Losowa pozycja X (z uwzglêdnieniem rozmiaru asteroidy)
+    // Losowa pozycja X (z uwzglÄ™dnieniem rozmiaru asteroidy)
     std::uniform_real_distribution<float> xAxis(ASTEROID_W / 2.0f, SCREEN_WIDTH - ASTEROID_W / 2.0f);
 
-    // Losowa pozycja Y (z uwzglêdnieniem rozmiaru asteroidy)
+    // Losowa pozycja Y (z uwzglÄ™dnieniem rozmiaru asteroidy)
     std::uniform_real_distribution<float> yAxis(ASTEROID_H / 2.0f, SCREEN_HEIGHT - ASTEROID_H / 2.0f);
 
     return { xAxis(gen), yAxis(gen) };
 }
 
-// Zwraca kszta³t asteroidy (dla detekcji kolizji)
+// Zwraca ksztaÅ‚t asteroidy (dla detekcji kolizji)
 const sf::VertexArray& Asteroid::getVertexArray() const
 {
     return shape;
 }
 
-// Renderuje asteroidê na ekranie
+// Renderuje asteroidÄ™ na ekranie
 void Asteroid::render(sf::RenderWindow& window)
 {
     sf::Transform transform;
     transform.translate(position).rotate(angle);
 
-    // Rysuj najpierw sprite, potem shape (np. jako kolizjê)
+    // Rysuj najpierw sprite, potem shape 
     sf::RenderStates states;
     states.transform = transform;
 
-    window.draw(sprite, states);       // Tekstura
-    window.draw(shape, transform);     // Kszta³t (kolizja lub efekt)
+    window.draw(sprite, states);       
+    window.draw(shape, transform);     
 }
 
-// Zwraca czas ¿ycia asteroidy od ostatniego uderzenia
+// Zwraca czas Å¼ycia asteroidy od ostatniego uderzenia
 float Asteroid::getLife() {
     return life;
 }
@@ -177,8 +185,8 @@ bool Asteroid::updateAsteroid(float deltaTime) {
         timer += deltaTime; // Odliczanie czasu
     }
     else {
-        timer = 0.0f; // Reset timera
-        can_damage = true; // Mo¿e ponownie zadawaæ obra¿enia
+        timer = 0.0f; 
+        can_damage = true; 
     }
 
     return can_damage;
