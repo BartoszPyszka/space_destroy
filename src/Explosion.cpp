@@ -1,4 +1,4 @@
-#include "Explosion.h"
+// Standardowe biblioteki C++ 
 #include <cstdlib>
 #include <vector>                
 #include <list>                  
@@ -10,7 +10,10 @@
 #include <algorithm>  
 #include <cmath>
 
-// Funkcja pomocnicza do losowania floatów z zakresu [min, max]
+// WÅ‚asne nagÅ‚Ã³wki
+#include "Explosion.h"
+
+// Funkcja pomocnicza do losowania floatÃ³w z zakresu [min, max]
 static float randomFloat(float min, float max) {
     return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
 }
@@ -25,7 +28,7 @@ Explosion::Explosion(sf::Vector2f pos, ExplosionColorType type)
     sf::Color red = sf::Color::Red;
     sf::Color gray = sf::Color(128, 128, 128);
 
-    // Zmieniamy kolory zale¿nie od typu wybuchu
+    // Zmieniamy kolory zaleÅ¼nie od typu wybuchu
     switch (colorType) {
     case ExplosionColorType::Lucky:
         yellow = sf::Color(100, 200, 255); // niebieski
@@ -33,24 +36,25 @@ Explosion::Explosion(sf::Vector2f pos, ExplosionColorType type)
         gray = sf::Color(180, 220, 255);
         break;
     case ExplosionColorType::Unlucky:
-        yellow = sf::Color(255, 255, 100); // ¿ó³ty intensywny
+        yellow = sf::Color(255, 255, 100); // Å¼Ã³Å‚ty intensywny
         red = sf::Color(255, 180, 50);
         gray = sf::Color(200, 200, 100);
         break;
     default:
         break;
     }
-
-    // Ustawiamy 1 kolos
+    
+    // Animacja wybuchu
+    // Ustawiamy 1 okrÄ…g
     yellowCircle.shape.setFillColor(yellow);
-    yellowCircle.maxRadius = 40.f;      // maksymalny rozmiar ko³a
-    yellowCircle.currentRadius = 10.f;  // pocz¹tkowy promieñ
-    yellowCircle.growthRate = 60.f;     // jak szybko ko³o roœnie
-    yellowCircle.shape.setOrigin(yellowCircle.currentRadius, yellowCircle.currentRadius); // œrodek ko³a
+    yellowCircle.maxRadius = 40.f;      
+    yellowCircle.currentRadius = 10.f;  
+    yellowCircle.growthRate = 60.f;     
+    yellowCircle.shape.setOrigin(yellowCircle.currentRadius, yellowCircle.currentRadius); // Å›rodek okrÄ™gu
     yellowCircle.shape.setRadius(yellowCircle.currentRadius);
     yellowCircle.shape.setPosition(position);
 
-    // Ustawiamy 2 kolo
+    // Ustawiamy 2 okrÄ…g
     redCircle.shape.setFillColor(red);
     redCircle.maxRadius = 30.f;
     redCircle.currentRadius = 8.f;
@@ -59,7 +63,7 @@ Explosion::Explosion(sf::Vector2f pos, ExplosionColorType type)
     redCircle.shape.setRadius(redCircle.currentRadius);
     redCircle.shape.setPosition(position);
 
-    // Ustawiamy 3 kolos
+    // Ustawiamy 3 okrÄ…g
     grayCircle.shape.setFillColor(gray);
     grayCircle.maxRadius = 20.f;
     grayCircle.currentRadius = 5.f;
@@ -68,33 +72,34 @@ Explosion::Explosion(sf::Vector2f pos, ExplosionColorType type)
     grayCircle.shape.setRadius(grayCircle.currentRadius);
     grayCircle.shape.setPosition(position);
 
-    createFragments(80);  // Deklaracja ile fragmentow chcemy mozna zmiejszyc jak ktos ma slaby pc XD
+    // Deklaracja ile fragmentow ma byÄ‡ przy wybuchu
+    createFragments(80);  
 }
 
-// Funkcja tworz¹ca fragmenty meteorytóww
+// Funkcja tworzÄ…ca fragmenty asteroid
 void Explosion::createFragments(int count) {
     fragments.clear();
 
     for (int i = 0; i < count; ++i) {
         Fragment frag;
 
-        // Tworzymy trójk¹t jako fragment
+        // Tworzymy trÃ³jkÄ…t jako fragment
         frag.shape.setPointCount(3);
 
-        // Losujemy pozycje punktów trójk¹ta, ¿eby nie by³ idealny
+        // Losujemy pozycje punktÃ³w trÃ³jkÄ…ta, Å¼eby nie byÅ‚ idealny
         frag.shape.setPoint(0, sf::Vector2f(0.f, 0.f));
         frag.shape.setPoint(1, sf::Vector2f(randomFloat(5.f, 12.f), randomFloat(-3.f, 3.f)));
         frag.shape.setPoint(2, sf::Vector2f(randomFloat(3.f, 7.f), randomFloat(5.f, 10.f)));
 
         frag.shape.setFillColor(sf::Color(100, 100, 100)); // szary kolor fragmentu
 
-        // Ustawiamy fragment na œrodku wybuchu
+        // Ustawiamy fragment na Å›rodku wybuchu
         frag.shape.setPosition(position);
 
-        // Ustawiamy punkt obrotu na œrodek
+        // Ustawiamy punkt obrotu na Å›rodek
         frag.shape.setOrigin(3.f, 3.f);
 
-        // Losujemy kierunek i prêdkoœæ ruchu fragmentu
+        // Losujemy kierunek i prÄ™dkoÅ›Ä‡ ruchu fragmentu
         float angle = randomFloat(0.f, 2.f * 3.14159f);
         float speed = randomFloat(50.f, 120.f);
         frag.velocity = sf::Vector2f(cos(angle) * speed, sin(angle) * speed);
@@ -103,7 +108,7 @@ void Explosion::createFragments(int count) {
     }
 }
 
-// Funkcja aktualizuj¹ca pojedyncze ko³o (rosn¹ce i znikaj¹ce)
+// Funkcja aktualizujÄ…ca pojedynczy okrÄ…g (rosnÄ…ce i znikajÄ…ce)
 void Explosion::updateCircle(CircleEffect& circle, float deltaTime)
 {
     circle.currentRadius += circle.growthRate * deltaTime;
@@ -120,7 +125,7 @@ void Explosion::updateCircle(CircleEffect& circle, float deltaTime)
     circle.shape.setPosition(position);
 }
 
-// Aktualizacja fragmentów-zanimowanie ich
+// Aktualizacja fragmentÃ³w - ich animacja
 void Explosion::updateFragments(float deltaTime)
 {
     float alpha = 255.f * (lifetime / MAX_LIFETIME);
@@ -134,20 +139,20 @@ void Explosion::updateFragments(float deltaTime)
     }
 }
 
-// G³ówna funkcja update wybuchu, wywo³ywana co klatkê
+// Aktualizuje stan wybuchu 
 void Explosion::update(float deltaTime)
 {
-    // Zmniejszamy czas ¿ycia wybuchu
+    // Zmniejszamy czas Å¼ycia wybuchu
     lifetime -= deltaTime;
     if (lifetime < 0.0f) lifetime = 0.0f;
 
-    // Aktualizujemy ko³a i fragmenty
+    // Aktualizujemy okrÄ™gi i fragmenty
     updateCircle(yellowCircle, deltaTime);
     updateCircle(redCircle, deltaTime);
     updateCircle(grayCircle, deltaTime);
     updateFragments(deltaTime);
 
-    // Jeœli czas ¿ycia min¹³, oznaczamy wybuch do usuniêcia z gry
+    // JeÅ›li czas Å¼ycia minÄ…Å‚, oznaczamy wybuch do usuniÄ™cia z gry
     if (lifetime <= 0.0f) {
         for (size_t i = 0; i < GameLogic::objects.size(); ++i) {
             if (GameLogic::objects[i].get() == this) {
@@ -158,15 +163,15 @@ void Explosion::update(float deltaTime)
     }
 }
 
-// Rysowanie wybuchu na ekranie
+// Renderuje wybuch na ekranie
 void Explosion::render(sf::RenderWindow& window)
 {
-    // Rysujemy ko³a w kolejnoœci rosprzeszczenienia sie wybuchu
+    // Rysujemy okrÄ™gi w kolejnoÅ›ci rosprzeszczenienia sie wybuchu
     window.draw(grayCircle.shape);
     window.draw(redCircle.shape);
     window.draw(yellowCircle.shape);
 
-    // Rysujemy wszystkie fragmenty meteorytoww
+    // Rysujemy wszystkie fragmenty asteroid
     for (auto& frag : fragments) {
         window.draw(frag.shape);
     }
