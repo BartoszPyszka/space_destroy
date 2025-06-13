@@ -82,9 +82,6 @@ Poniżej znajduje się lista istotnych commitów dokumentujących rozwój gry:
 | v0.15     | Dodano animację wybuchu asteroid                 |
 | v1.0.1    | Finalna wersja gry                 |
 
-
-> Kamienie milowe oznaczają stabilne, grywalne etapy rozwoju — wersje, które można testować i oceniać.
-
 ## 🖥️ Makiety UI
 
 1. **Ekran startowy** – ekran powitalny z opcją wpisania imienia i rozpoczęcia gry.
