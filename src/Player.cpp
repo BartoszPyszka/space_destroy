@@ -1,7 +1,7 @@
-#include "Player.h"
-#include <cmath>        // std::sin, std::cos, M_PI
-#include <algorithm>    // std::min, std::max
-#include <memory>       // std::make_unique
+// Standardowe biblioteki C++ 
+#include <cmath>        
+#include <algorithm>    
+#include <memory>       
 #include <vector>                
 #include <list>                                 
 #include <fstream>               
@@ -10,7 +10,11 @@
 #include <functional>            
 #include <algorithm>  
 #include <cmath>
-// Konstruktor gracza - inicjalizuje podstawowe w³aœciwoœci
+
+// WÅ‚asne nagÅ‚Ã³wki
+#include "Player.h"
+
+// Konstruktor gracza 
 Player::Player(sf::Texture& texture)
     : GameObject({ 500, 500 }, 0.0f),
     Playersprite(texture),
@@ -20,8 +24,9 @@ Player::Player(sf::Texture& texture)
     PlayerframeTimer(0.0f),
     PlayerframeSize(192, 164)
 {
-    originalTexture = &texture;  // zapamiêtaj oryginaln¹ teksturê
+    originalTexture = &texture;  // zapamiÄ™taj oryginalnÄ… teksturÄ™
 
+    // ZaÅ‚adowanie tekstur i dÅºwiÄ™kÃ³w
     if (!boostTexture.loadFromFile("Assets//graphics//boost.png")) {
         printf("Error loading boost texture\n");
     }
@@ -39,7 +44,7 @@ Player::Player(sf::Texture& texture)
 
 void Player::update(float deltaTime)
 {
-    // Obs³uga bonusów
+    // ObsÅ‚uga bonusÃ³w
     if (currentBonus != BonusType::None) {
         bonusTimer -= deltaTime;
         if (bonusTimer <= 0.0f) {
@@ -50,7 +55,7 @@ void Player::update(float deltaTime)
         }
     }
     else {
-        // Losowe przyznanie bonusu co jakiœ czas
+        // Losowe przyznanie bonusu co jakiÅ› czas
         static float bonusSpawnTimer = 0.0f;
         bonusSpawnTimer += deltaTime;
         if (bonusSpawnTimer >= 15.f) {
@@ -77,7 +82,7 @@ void Player::update(float deltaTime)
 
         }
     }
-    // Zmiana wygladu na nieœmiertelnoœæ
+    // Zmiana wygladu na nieÅ›miertelnoÅ›Ä‡
     if (invincible) {
         // Miganie co 0.2 sekundy
         static float blinkTimer = 0.0f;
@@ -87,7 +92,7 @@ void Player::update(float deltaTime)
         if (blinkTimer < 0.1f)
             Playersprite.setColor(sf::Color(100, 200, 255, 180)); // widoczny
         else
-            Playersprite.setColor(sf::Color(100, 200, 255, 80)); // pó³przezroczysty
+            Playersprite.setColor(sf::Color(100, 200, 255, 80)); // pÃ³Å‚przezroczysty
     }
     else {
         Playersprite.setColor(sf::Color::White);
@@ -100,9 +105,7 @@ void Player::update(float deltaTime)
         Playersprite.setTexture(*originalTexture);
     }
 
-
-
-        // Animacja
+    // Animacja
     PlayerframeTimer += deltaTime;
         if (PlayerframeTimer >= PlayerframeTime) {
             PlayerframeTimer = 0.0f;
@@ -112,31 +115,27 @@ void Player::update(float deltaTime)
         }
 
         Playersprite.setPosition(position);
-        Playersprite.setRotation(angle);  // zak³adamy, ¿e rotation masz z GameObject
-    // Aktualizacja timera strza³u (odliczanie do nastêpnego mo¿liwego strza³u)
+        Playersprite.setRotation(angle);  
+    
     shootTimer -= deltaTime;
 
-    // Sterowanie obrotem:
-    // A - obrót w lewo, D - obrót w prawo
-    // Prêdkoœæ obrotu zale¿na od sta³ej TURN_SPEED i czasu klatki
+    // Sterowanie obrotem
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) angle -= TURN_SPEED * deltaTime;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) angle += TURN_SPEED * deltaTime;
 
-    // Konwersja k¹ta na radiany dla funkcji trygonometrycznych
+    // Konwersja kÄ…ta na radiany 
     float radians = angle * (M_PI / 180.f);
 
-    // Poruszanie siê do przodu (klawisz W)
+    // Poruszanie siÄ™ 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        // Obliczenie nowej pozycji na podstawie kierunku
         position.x += std::cos(radians) * playerSpeedBase * deltaTime;
         position.y += std::sin(radians) * playerSpeedBase * deltaTime;
 
-        // Sprawdzenie granic ekranu (z marginesem 10 pikseli od krawêdzi)
+        // Sprawdzenie granic ekranu (z marginesem 10 pikseli od krawÄ™dzi)
         position.x = std::min(std::max(position.x, PLAYER_W / 2.0f + 10.0f), SCREEN_WIDTH - PLAYER_W / 2.0f);
         position.y = std::min(std::max(position.y, PLAYER_H / 2.0f + 10.0f), SCREEN_HEIGHT - PLAYER_H / 2.0f);
     }
 
-    // Poruszanie siê do ty³u (klawisz S) - 3x wolniej ni¿ do przodu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         position.x -= std::cos(radians) * playerSpeedBase * deltaTime / 2;
         position.y -= std::sin(radians) * playerSpeedBase * deltaTime / 2;
@@ -152,6 +151,7 @@ void Player::update(float deltaTime)
     sf::Vector2f topCannon = cannonBase - perpendicular * 0.1f;
     sf::Vector2f bottomCannon = cannonBase + perpendicular * 20.f;
 
+    // Strzelanie
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && shootTimer <= 0.0f) {
         shootTimer = shootDelayBase;
         sf::Vector2f direction = forward;
@@ -162,9 +162,9 @@ void Player::update(float deltaTime)
 
 
 
-    // Tworzymy prostok¹tny polygon (sf::VertexArray) na podstawie sprite'a gracza
+    // Tworzymy prostokÄ…tny polygon (sf::VertexArray) na podstawie sprite'a gracza
 
-    sf::FloatRect localBounds = Playersprite.getLocalBounds();  // prostok¹t w lokalnych wspó³rzêdnych sprite'a
+    sf::FloatRect localBounds = Playersprite.getLocalBounds();  // prostokÄ…t w lokalnych wspÃ³Å‚rzÄ™dnych sprite'a
 
     for (const auto& obj : GameLogic::objects)
     {
@@ -177,11 +177,11 @@ void Player::update(float deltaTime)
         sf::FloatRect localBounds = Playersprite.getLocalBounds();
         sf::VertexArray playerPolygon(sf::LineStrip, 5);
 
-        //offset pod srodek klatki by hitbox byl w dobym miejscu
+        // Offset pod srodek klatki by hitbox byl w dobym miejscu
         float offsetX = 96.f;
         float offsetY = 82.f;
 
-        //kwadraty hitboxu
+        // Hitbox
         playerPolygon[0].position = { 56.f - offsetX, 66.f - offsetY };
         playerPolygon[1].position = { 154.f - offsetX, 66.f - offsetY };
         playerPolygon[2].position = { 154.f - offsetX, 128.f - offsetY };
@@ -192,6 +192,7 @@ void Player::update(float deltaTime)
         playerTransform.translate(position);
         playerTransform.rotate(angle);
         sf::VertexArray transformedPlayer = physics::getTransformed(playerPolygon, playerTransform);
+        
         // Wyciagamy parametry asteroidy
         sf::Transform asteroidTransform;
         asteroidTransform.translate(asteroid->position);
@@ -209,6 +210,6 @@ void Player::update(float deltaTime)
 void Player::render(sf::RenderWindow& window)
 {
     Playersprite.setPosition(position);
-    Playersprite.setRotation(angle); // U¿yj angle, jeœli rotation = angle w Twoim GameObject
+    Playersprite.setRotation(angle); 
     window.draw(Playersprite);
 }
