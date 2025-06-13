@@ -28,61 +28,48 @@ Projekt zespołowy wykonany przez:
 - **Statek - asteroida**: przegrana rozgrywka
 - **Pocisk - asteroida**: zniszczenie obu, przyznanie punktów
 
-## ⚙️ Funkcjonalności
-
-| Funkcjonalność | Odpowiedzialny |
-|----------------|----------------|
-| Sterowanie statkiem (prędkość i kierunek) | Bartosz Pyszka |
-| Losowe generowanie asteroid i ich ruch | Bartosz Pyszka |
-| Strzelanie pociskami | Bartosz Pyszka |
-| Płynne poruszanie się obiektów | Bartosz Pyszka |
-| Kolizje pocisków z asteroidami | B. Pyszka & M. Podhajny |
-| Kolizje statku z asteroidami | B. Pyszka & M. Podhajny |
-| Licznik punktów i wyświetlanie wyniku | B. Pyszka & M. Podhajny |
-| Obsługa końca gry i restart | B. Pyszka & M. Podhajny |
-| Zapis danych gracza (imię, czas, punkty) przy zakończeniu sesji | B. Pyszka & M. Podhajny |
-| Zapis wyniku końcowego (jeśli lepszy niż poprzedni) | B. Pyszka & M. Podhajny |
-| Animacje wybuchów, tekstury obiektów | Maciej Podhajny |
-| Efekty dźwiękowe (strzały, wybuchy) | Maciej Podhajny |
-| Zapisywanie/wczytywanie stanu gry | Maciej Podhajny |
-| Losowe pojawianie się bonusów | Maciej Podhajny |
-
-## 📝 Commity
+## 📝 Commity i Funkcjonalności
 
 Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w koncepcie:
 
-| Wersja commita           | Autor                   |  Funkcjonalność                                                                |
-|--------------------------|-------------------------|--------------------------------------------------------------------------------|
-| XXX                      | Bartosz Pyszka          | Sterowanie statkiem (prędkość i kierunek)                                      |
-| XXX                      | Bartosz Pyszka          | Losowe generowanie asteroid i ich ruch                                         |
-| XXX                      | Bartosz Pyszka          | Strzelanie pociskami                                                           |
-| XXX                      | Bartosz Pyszka          | Płynne poruszanie się obiektów                                                 |
-| XXX                      | B. Pyszka & M. Podhajny | Kolizje pocisków z asteroidami                                                 |
-| XXX                      | B. Pyszka & M. Podhajny | Kolizje statku z asteroidami                                                   |
-| XXX                      | B. Pyszka & M. Podhajny | Obsługa końca gry i restart                                                    |
-| XXX                      | B. Pyszka & M. Podhajny | Zapis danych gracza (imię, czas, punkty) przy zakończeniu sesji                |
-| XXX                      | Maciej Podhajny         | Animacje wybuchów, tekstury obiektów                                           |
-| XXX                      | Maciej Podhajny         | Efekty dźwiękowe (strzały, wybuchy)                                            |
-| XXX                      | Maciej Podhajny         | Losowe pojawianie się bonusów                                                  |
+| Wersje commitów          | Autor                      |  Funkcjonalność                                                                |
+|--------------------------|----------------------------|--------------------------------------------------------------------------------|
+| v0.2.1                   | Bartosz Pyszka             | Sterowanie statkiem (prędkość i kierunek)                                      |
+| v0.5; v0.5.1             | Bartosz Pyszka             | Losowe generowanie asteroid i ich ruch                                         |
+| v0.4                     | Bartosz Pyszka             | Strzelanie pociskami                                                           |
+| v0.2.1;                  | Bartosz Pyszka             | Płynne poruszanie się obiektów                                                 |
+| v0.7                     | B. Pyszka & M. Podhajny    | Kolizje pocisków z asteroidami                                                 |
+| v0.7                     | B. Pyszka & M. Podhajny    | Kolizje statku z asteroidami*                                                  |
+| v0.7                     | B. Pyszka & M. Podhajny    | System punktacji                                                               |
+| v0.8                     | B. Pyszka & M. Podhajny    | Obsługa końca gry i restart                                                    |
+| v0.11                    | B. Pyszka & M. Podhajny**  | Zapis danych gracza (imię, czas, punkty) przy rozpoczęciu sesji**              |
+| v0.9                     | B. Pyszka & M. Podhajny*** | Zapis danych najlepszego gracza (imię, punkty) przy zakończeniu sesji          |
+| v0.11.1;v0.12;v0.12.1.b;v0.13;v0.13a;v0.15                      | Maciej Podhajny            | Animacje wybuchów, tekstury obiektów                                           |
+| v0.12.1                     | Maciej Podhajny            | Efekty dźwiękowe (strzały, wybuchy)                                            |
+| v0.14                      | Maciej Podhajny            | Losowe pojawianie się bonusów                                                  |
+| XXX                      | Maciej Podhajny            | Zapisanie i wczytanie pozycji wszystkich obiektów****                          |
 
-< fff
+> * Zmiana do konceptu - gracz ma jedno życie, nie wiele punktów zdrowia
+> ** Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Maciej Podhajny); zapis następuje po śmierci gracza
+> *** Zmiana do konceptu - zmiana przypisania osoby (wspólnie zamiast samodzielnie Bartosz Pyszka) 
+> **** Tego nie udało się wykonać, zadanie nas przerosło
 
-## 📍 Kamienie milowe 🗿
-| Wersja    | Opis                                                                 |
-|-----------|----------------------------------------------------------------------|
-| v0.1      | Utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie. |
-| v0.2.2    | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie. |
-| v0.4      | Dodano funkcję strzelania                             |
-| v0.5.1    | Dodano klasę Asteroid z ruchem, obrotem i losową generacją.                    |
-| v0.7.1    | Dodano system kolizji pocisk-asteroida, gracz-asteroida oraz systemu punktacji         |
-| v0.8      | Dodano elementu UI: ekranu głównego, ekranu po przegranej. Dodano system ponownej gry                           |
-| v0.9      | Dodano zapis rekordu do pliku i wyświetlanie go w grze                                      |
-| v0.11     | Dodano możliwość wprowadzenia nazwy gracza oraz zapis danych z konkretnej sesji, zastosowano unique_ptr, dodano obszerne komentarze                 |
-| v0.12.1b  | Dodano elementu UI: audio, animacji gracza, efektów dźwiękowych i tła. Zmiany w Player                |
-| v0.13a    | Dodano tekstury asteroid. Dopracowano strzelanie. Zmiana modelu gracza                |
-| v0.14.1   | Dodano system bonusów                 |
-| v0.15     | Dodano animację wybuchu asteroid                 |
-| v1.0.1    | Finalna wersja gry                 |
+## 🗿 Kamienie milowe 🗿
+| Wersja     | Opis                                                                 |
+|------------|----------------------------------------------------------------------|
+| v0.1       | Utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie. |
+| v0.2.2     | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie. |
+| v0.4       | Dodano funkcję strzelania                             |
+| v0.5.1     | Dodano klasę Asteroid z ruchem, obrotem i losową generacją.                    |
+| v0.7.1     | Dodano system kolizji pocisk-asteroida, gracz-asteroida oraz systemu punktacji         |
+| v0.8       | Dodano elementu UI: ekranu głównego, ekranu po przegranej. Dodano system ponownej gry                           |
+| v0.9       | Dodano zapis rekordu do pliku i wyświetlanie go w grze                                      |
+| v0.11      | Dodano możliwość wprowadzenia nazwy gracza oraz zapis danych z konkretnej sesji, zastosowano unique_ptr, dodano obszerne komentarze                 |
+| v0.12.1b   | Dodano elementu UI: audio, animacji gracza, efektów dźwiękowych i tła. Zmiany w Player                |
+| v0.13a     | Dodano tekstury asteroid. Dopracowano strzelanie. Zmiana modelu gracza                |
+| v0.14.1    | Dodano system bonusów                 |
+| v0.15      | Dodano animację wybuchu asteroid                 |
+| v1.0.19    | Finalna wersja gry                 |
 
 ## 📁 Struktura katalogów
 ```
