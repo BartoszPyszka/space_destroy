@@ -1,29 +1,28 @@
 #pragma once
+
+// Biblioteki zewnÄ™trzne (SFML)
 #include <SFML/Graphics.hpp>
 
-// Klasa bazowa dla wszystkich obiektów gry 
-// (np. gracza, pocisków, asteroid). Udostêpnia wspólne 
-// w³aœciwoœci, takie jak pozycja i k¹t obrotu,
-// oraz metody wirtualne do aktualizacji i renderowania
+// Klasa bazowa dla wszystkich obiektÃ³w gry 
 class GameObject {
 public:
-    // Konstruktor inicjalizuj¹cy pozycjê i k¹t obrotu obiektu
+    // Konstruktor obiektÃ³w 
     GameObject(sf::Vector2f pos, float ang);
 
-    // Wirtualny destruktor – umo¿liwia poprawne 
-    // niszczenie obiektów pochodnych
+    // Wirtualny destruktor â€“ umoÅ¼liwia poprawne 
+    // niszczenie obiektÃ³w pochodnych
     virtual ~GameObject() {}
 
-    // Metoda wirtualna – ka¿da klasa dziedzicz¹ca 
-    // musi zaimplementowaæ logikê aktualizacji
+    // Metoda wirtualna â€“ kaÅ¼da klasa dziedziczÄ…ca 
+    // musi zaimplementowaÄ‡ logikÄ™ aktualizacji
     virtual void update(float deltaTime) = 0;
 
-    // Metoda wirtualna – ka¿da klasa dziedzicz¹ca 
-    // musi zaimplementowaæ logikê renderowania
+    // Metoda wirtualna â€“ kaÅ¼da klasa dziedziczÄ…ca 
+    // musi zaimplementowaÄ‡ logikÄ™ renderowania
     virtual void render(sf::RenderWindow& window) = 0;
 
-    sf::Vector2f position;   // Pozycja obiektu w przestrzeni gry
-    float angle;             // K¹t obrotu obiektu (w stopniach)
+    sf::Vector2f position;   
+    float angle;             
 };
 
 
