@@ -1,4 +1,4 @@
-#include "ScoreSave.h"
+// Standardowe biblioteki C++ 
 #include <vector>                
 #include <list>                  
 #include <memory>                
@@ -9,13 +9,12 @@
 #include <algorithm>  
 #include <cmath>
 
-/**
- * Generuje string z aktualn¹ dat¹ i czasem.
- * Format: RRRR-MM-DD GG:MM:SS
- */
+// WÅ‚asne nagÅ‚Ã³wki
+#include "ScoreSave.h"
+
 std::string ScoreSaver::GetCurrentDateTime() {
     std::time_t now = std::time(nullptr); // Pobierz aktualny czas
-    std::tm localTime; // Struktura przechowuj¹ca czas lokalny
+    std::tm localTime; // Struktura przechowujÄ…ca czas lokalny
 
     // Konwertuj do czasu lokalnego (wersja bezpieczna)
     localtime_s(&localTime, &now);
@@ -36,7 +35,7 @@ std::string ScoreSaver::GetCurrentDateTime() {
 void ScoreSaver::SaveToFile(const std::string& filename,
     const std::string& playerName,
     int score) {
-    // Otwórz plik w trybie dopisywania
+    // OtwÃ³rz plik w trybie dopisywania
     std::ofstream file(filename, std::ios::app);
 
     if (file.is_open()) {
@@ -44,11 +43,11 @@ void ScoreSaver::SaveToFile(const std::string& filename,
         file << "Player: " << playerName << "\n";
         file << "Score: " << score << "\n";
         file << "Date: " << GetCurrentDateTime() << "\n";
-        file << "----------------\n"; // Separator miêdzy wpisami
+        file << "----------------\n"; // Separator miÄ™dzy wpisami
         file.close();
     }
     else {
-        // Rzuæ wyj¹tek jeœli plik nie móg³ zostaæ otwarty
+        // RzuÄ‡ wyjÄ…tek jeÅ¼li plik nie mÃ³gÅ‚ zostaÄ‡ otwarty
         throw std::runtime_error("Cannot open scores file: " + filename);
     }
 }
