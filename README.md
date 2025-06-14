@@ -58,7 +58,7 @@ Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w k
 
 > `****` Tego nie udało się wykonać, zadanie nas przerosło
 
-> Commity stworzone od 12-06 do 14-06 (od commita 773d9e7e96101bc83a59a13737c97ebd6cc148a2 do cd6d451e0b47cafc8b9acaaea59a6e647e2255c3) są drobnymi zmianami kosmetycznymi, kodu i pliku README
+> Commity stworzone od 12-06 do 14-06 są drobnymi zmianami kosmetycznymi, kodu i pliku README
 
 ## 🗿 Kamienie milowe 🗿
 | Wersja  commita   | Opis                                                                 |
