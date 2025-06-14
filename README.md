@@ -61,7 +61,7 @@ Poniżej znajduje się lista commitów zawierające funkcjonalności zawarte w k
 > Commity stworzone od 12-06 do 14-06 (od commita 773d9e7e96101bc83a59a13737c97ebd6cc148a2 do cd6d451e0b47cafc8b9acaaea59a6e647e2255c3) są drobnymi zmianami kosmetycznymi, kodu i pliku README
 
 ## 🗿 Kamienie milowe 🗿
-| Wersja     | Opis                                                                 |
+| Wersja  commita   | Opis                                                                 |
 |------------|----------------------------------------------------------------------|
 | v0.1       | Utworzono główne okno aplikacji, obsługę zdarzeń użytkownika, mechanizm odmierzania czasu (deltaTime) oraz podstawowy system renderowania obiektów na ekranie. |
 | v0.2.2     | Dodano klasę Player: gracz może się obracać, poruszać do przodu i do tyłu. Zmiany w main(): uproszczono pętlę gry i dodano komentarze dla lepszej czytelności. Rysowanie gracza: Player jest teraz wyświetlany na ekranie. |
